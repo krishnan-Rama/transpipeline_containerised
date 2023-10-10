@@ -1,0 +1,157 @@
+#!/bin/bash
+
+# Define core parameters - rawdata, pipedir, moduledir, assembly_name
+sourcedir="/mnt/scratch/c23048124/raw_all"
+pipedir=$(pwd -P)
+moduledir="${pipedir}/modules"
+
+#define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
+current_date=$(date +%d%m%y)  # Get the current date in the desired format
+assembly="Gbull_020823" # "PscaXX_260723" # Replace the date portion in the assembly variable
+
+
+## Make workdir and output directories
+workdir="${pipedir}/workdir"
+outdir="${pipedir}/outdir"
+log="${workdir}/log"
+singularitydir="${pipedir}/singularities"
+
+if [[ ! -d ${workdir} ]]; then 
+	mkdir ${workdir}
+fi
+
+if [[ ! -d "${outdir}" ]]; then 
+	mkdir "${outdir}" 
+fi
+
+if [[ ! -d "${log}" ]]; then
+        mkdir "${log}"
+fi
+
+if [[ ! -d "${singularitydir}" ]]; then
+        mkdir "${singularitydir}"
+fi
+
+# count number of samples, reads
+# sample_number=$(ls -l ${sourcedir}/*_1.fastq.gz | wc -l)
+
+
+# Export core parameters
+export sourcedir
+export pipedir
+export workdir
+export outdir
+export moduledir
+export log
+export sample_number
+export assembly
+export singularitydir
+
+# Step Test: Script Test
+testdir="/mnt/scratch/c23048124/raw_100K"
+if [[ ! -d "${testdir}" ]]; then
+        mkdir "${testdir}"
+fi
+export testdir
+
+# Step 0: Data Transfer
+rawdir="${workdir}/rawdir/G_bull"
+if [[ ! -d "${rawdir}" ]]; then 
+	mkdir "${rawdir}" 
+fi
+export rawdir
+
+# STEP 1A:
+qcdir="${workdir}/qc_results_array"
+if [[ ! -d "${qcdir}" ]]; then 
+	mkdir "${qcdir}" 
+fi 
+export qcdir
+
+# STEP 2A:
+trimdir="${workdir}/trim_files_2/trim_Gbull"
+if [[ ! -d "${trimdir}" ]]; then 
+	mkdir "${trimdir}" 
+fi
+export trimdir
+
+# STEP 1B:
+# define in step 1
+
+# STEP 2B:
+krakendir="${workdir}/kraken_all/kraken_Gbull"
+if [[ ! -d "${krakendir}" ]]; then
+        mkdir "${krakendir}"
+fi
+export krakendir
+
+# STEP 2C:
+rcordir="${workdir}/rcorrector/rcorrector_Gbull/Gbull_test"
+if [[ ! -d "${rcordir}" ]]; then
+        mkdir "${rcordir}"
+fi
+export rcordir
+
+#STEP 3: Assembly # begin with trinity_
+assemblydir="${workdir}/assembly/trinity_Gbull_assembly/trinity_preprocessed"
+if [[ ! -d "${assemblydir}" ]]; then
+        mkdir "${assemblydir}"
+fi
+export assemblydir
+
+#STEP 4: Evigene
+evigenedir="${workdir}/evigene_all/evigene_Gbull_preprocessed"
+if [[ ! -d "${evigenedir}" ]]; then
+        mkdir "${evigenedir}"
+fi
+export evigenedir
+
+#STEP 5: Busco
+buscodir="${workdir}/busco_all/busco_Gbull_preprocessed"
+if [[ ! -d "${buscodir}" ]]; then
+        mkdir "${buscodir}"
+fi
+export buscodir
+
+#STEP 6: trinity mapping
+rsemdir="${workdir}/rsem/rsem_Gbull"
+if [[ ! -d "${rsemdir}" ]]; then
+        mkdir "${rsemdir}"
+fi
+export rsemdir
+
+#STEP 6: trinity post analsyis
+#conditionA	sample1
+#conditionB	sample2
+metadata=${pipedir}/metadata.txt
+export metadata
+
+#STEP 8: multiqc
+multiqcdir="${workdir}/multiqc/multiqc_Gbull"
+if [[ ! -d "${multiqcdir}" ]]; then
+        mkdir "${multiqcdir}"
+fi
+export multiqcdir
+
+#Step 9: Blastdb download and formatting
+blastdb="${pipedir}/blastdb"
+if [[ ! -d "${blastdb}" ]]; then
+        mkdir "${blastdb}"
+fi
+export blastdb
+
+#Step 10: Blastp Evigene Translation
+blastout="${workdir}/blastdir/blastdir_Gbull"
+if [[ ! -d "${blastout}" ]]; then
+        mkdir "${blastout}"
+fi
+export blastout
+
+#Step 11: Import annotation from Uniprot - unimapi
+upimapi="${workdir}/upimapi_all/upimapi_Gbull/upimapi_Gbull_4"
+if [[ ! -d "${upimapi}" ]]; then
+        mkdir "${upimapi}"
+fi
+export upimapi
+
+
