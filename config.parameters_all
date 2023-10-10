@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
-sourcedir="/mnt/scratch/c23048124/raw_all/Ealbidus"
+sourcedir="/your/source/directory"
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
 
 #define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
 current_date=$(date +%d%m%y)  # Get the current date in the desired format
-assembly="Gbull_020823" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
+assembly="Your_reads_file_prefix_before_.fastq/fasta" ### e.g "Hsap_130923" "Dmel_020823" "PscaXX_260723" .fastq/fasta
 
 
 ## Make workdir and output directories
