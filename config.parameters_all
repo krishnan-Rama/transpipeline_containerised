@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
-sourcedir="/your/source/directory"
+sourcedir="/your/source/directory" ### This location contains the raw reads  
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
 
