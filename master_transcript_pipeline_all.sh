@@ -69,9 +69,9 @@ sbatch -d singleton --error="${log}/rcor_%J.err" --output="${log}/rcor__%J.out" 
 # WORK: assemblydir
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
-# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
-sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
-sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
+sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
+# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
+# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
 
 # Step 4: evigene
 # -- Run evigene for gene annotation.
