@@ -77,6 +77,8 @@ Each step in the master pipeline script invokes an external bash script (found i
 16. **Annotation Extraction from UniProt**: Annotations are extracted based on blast search results from UniProt.  
    Script: `11-upimapi.sh`
 
+
+### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
 
 
