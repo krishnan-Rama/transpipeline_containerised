@@ -13,8 +13,13 @@ This master pipeline `master_transcript_pipeline.sh` serves as a comprehensive w
 git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 ```
 
+2. Configure the location of `$sourcedir` through `config.parameters_all` or simply put the raw reads in `$rawdir`.  
 
+3. Modify the SLURM parameters for scripts performing all the tasks according to your HPC specifications through the `modules` directory.
 
+4. Run the pipeline `master_transcript_pipeline_all.sh` using `./master_transcript_pipeline_all.sh`.  
+
+   Note: You can manually run individual steps in `master_transcript_pipeline_all.sh` by hashing out `(#)` `sbatch` jobs.   
 
 
 ### Workflow Diagram
