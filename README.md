@@ -7,8 +7,8 @@ This master pipeline `master_transcript_pipeline.sh` serves as a comprehensive w
 
 ## Installation
 
-1. Install the transpipeline code into the folder in which you will be performing the assembly:
-   git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
+1. Install the transpipeline code into the folder in which you will be performing the assembly:  
+git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 
 ### Workflow Diagram
