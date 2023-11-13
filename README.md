@@ -1,5 +1,5 @@
 # transpipeline
-A slurm pipeline for transcriptome pre-proessing, _de novo_ assembly, and annotation.
+A SLURM pipeline for transcriptome quality assessment, pre-processing, _de novo_ assembly, and annotation.
 
 ## Master Pipeline Overview 
 
