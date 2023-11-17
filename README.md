@@ -1,10 +1,6 @@
 # transpipeline
 A SLURM pipeline for transcriptome quality assessment, pre-processing, _de novo_ assembly, and annotation.
 
-## Master Pipeline Overview 
-
-This master pipeline `master_transcript_pipeline.sh` serves as a comprehensive workflow for transcriptome processing, from the initial transfer of raw data to the extraction of annotations. The script is organized into multiple steps, each encompassing a specific procedure in the pipeline. These procedures include data quality checks, trimming, taxonomic classification, assembly, annotation, and evaluation.
-
 ## Installation
 
 1. Install the transpipeline code into your HPC cluster directory in which you will be performing the assembly:  
