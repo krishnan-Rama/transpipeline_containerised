@@ -11,7 +11,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 2. Configure the location of `$sourcedir` (location of raw reads) through `config.parameters_all` or simply put the raw reads in `$rawdir`.  
 
-3. Modify the HPC nodes or SLURM parameters in the scripts through `modules` directory.
+3. Modify the HPC Slurm parameters in each individual script inside `modules` directory.
 
 4. Run the pipeline `master_transcript_pipeline_all.sh` using `./master_transcript_pipeline_all.sh`.  
 
