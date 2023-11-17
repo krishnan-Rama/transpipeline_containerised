@@ -9,7 +9,7 @@ A SLURM pipeline for transcriptome quality assessment, pre-processing, _de novo_
 git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 ```
 
-2. Configure the location of `$sourcedir` through `config.parameters_all` or simply put the raw reads in `$rawdir`.  
+2. Configure the location of `$sourcedir` (location of raw reads) through `config.parameters_all` or simply put the raw reads in `$rawdir`.  
 
 3. Modify the HPC nodes or SLURM parameters in the scripts through `modules` directory.
 
