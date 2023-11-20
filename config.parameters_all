@@ -7,7 +7,7 @@ moduledir="${pipedir}/modules"
 
 #define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
 current_date=$(date +%d%m%y)  # Get the current date in the desired format
-assembly=" " ### Put the name of your raw read file before the .fastq/fasta extension e.g "Hsap_130923" "Dmel_020823" "PscaXX_260723" 
+assembly="[sample name]" ### Put the name of your raw read file before the .fastq/fasta extension e.g "Hsap_130923" "Dmel_020823" "PscaXX_260723" 
 
 
 ## Make workdir and output directories
