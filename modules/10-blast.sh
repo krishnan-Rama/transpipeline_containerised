@@ -42,9 +42,6 @@ WORKINGDIR=${pipedir}
 # set folders to bind into container
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
-############# SOURCE COMMANDS ##################################
-cat >${log}/fastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
-
 declare -a blastlib=(\
 sprot
 Hsap
@@ -53,6 +50,9 @@ Dmel
 Cele
 Scer
 )
+
+############# SOURCE COMMANDS ##################################
+cat >${log}/fastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
 
 blastp -query  "${evigenedir}/okayset/${assembly}.okay.aa" \
        -db "${blastdb}/${blastlib[${SLURM_ARRAY_TASK_ID}]}" \
