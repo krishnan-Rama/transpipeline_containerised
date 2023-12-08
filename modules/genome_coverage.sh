@@ -3,7 +3,7 @@
 #SBATCH --job-name=pipeline
 #SBATCH --partition=epyc
 #SBATCH --nodes=1
-#SBATCH --ntasks=16
+#SBATCH --ntasks=1
 #SBATCH --cpus-per-task=64
 #SBATCH --mem=300000
 
