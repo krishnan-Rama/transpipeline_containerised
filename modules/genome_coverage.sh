@@ -32,7 +32,7 @@ mkdir -p ${OUTPUT_DIR}
 bwa index ${assemblydir}/${assembly}.fasta
 
 # Align reads to the assembly
-bwa mem -x ont2d ${assemblydir}/${assembly}.fasta ${krakendir}/${assembly}.fastq.gz > ${OUTPUT_DIR}/aligned_reads.sam
+bwa mem -x ont2d -t ${SLURM_CPUS_PER_TASK} ${assemblydir}/${assembly}.fasta ${krakendir}/${assembly}.fastq.gz > ${OUTPUT_DIR}/aligned_reads.sam
 
 # Convert SAM to BAM and sort
 samtools view -Sb ${OUTPUT_DIR}/aligned_reads.sam | samtools sort -o ${OUTPUT_DIR}/sorted_aligned_reads.bam
