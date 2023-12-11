@@ -3,7 +3,7 @@ A SLURM pipeline for transcriptome quality assessment, pre-processing, _de novo_
 
 ## Installation
 
-1. Install the transpipeline code into your HPC cluster directory in which you will be performing the assembly:  
+1. Install the transpipeline resources into your HPC cluster directory in which you will be performing the assembly:  
 
 ```
 git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
