@@ -145,8 +145,8 @@ sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.ou
 # PROCESS - Annotation extraction
 sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi_2.sh"
 
-# Step 12: Extract orthologs and create a phylogeny tree
+# Step 12: Extract orthologs from local genome database
 # sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
 
-# step 13: create phylogenetic tree
+# step 13: Create phylogenetic tree from orthologs retrieved 
 # sbatch --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/figtree.sh"
