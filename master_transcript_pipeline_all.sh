@@ -50,7 +50,7 @@ sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.ou
 # WORK: krakendir
 # OUTPUT: kraken2
 # PROCESS - kraken2 trim data
-# sbatch -d singleton --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" --array="1-${sample_number}%10" "${moduledir}/kraken.sh"
+sbatch -d singleton --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" --array="1-${sample_number}%10" "${moduledir}/kraken.sh"
 sbatch -d singleton --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" --array="1-${sample_number}%10" "${moduledir}/2B-kraken2.sh"
 
 # Step 2C: rcorrector on kraken2 file
@@ -70,8 +70,8 @@ sbatch -d singleton --error="${log}/rcor_%J.err" --output="${log}/rcor__%J.out" 
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
 sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
-# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
-# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
 
 # Step 4: evigene
 # -- Run evigene for gene annotation.
@@ -143,7 +143,7 @@ sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.ou
 # WORK: unimapi
 # OUTPUT:
 # PROCESS - Annotation extraction
-sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi_2.sh"
+sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
 
 # Step 12: Extract orthologs from local genome database
 # sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
