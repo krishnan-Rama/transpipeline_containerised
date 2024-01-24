@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
-sourcedir="/mnt/scratch/c23048124/raw_all/Ealbidus"
+sourcedir="/mnt/scratch/c23048124/pipeline_all//outdir/Ea/trimmed"
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
 
 #define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
 current_date=$(date +%d%m%y)  # Get the current date in the desired format
-assembly="Gbull_020823" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
+assembly="merged" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
 
 
 ## Make workdir and output directories
 workdir="${pipedir}/workdir"
 outdir="${pipedir}/outdir"
-log="${workdir}/log"
+log="${workdir}/log/blast"
 singularitydir="${pipedir}/singularities"
 
 if [[ ! -d ${workdir} ]]; then 
@@ -33,7 +33,7 @@ if [[ ! -d "${singularitydir}" ]]; then
 fi
 
 # count number of samples, reads
-sample_number=$(ls -l ${sourcedir}/*_1.fastq.gz | wc -l)
+#sample_number=$(ls -l ${sourcedir}/*_1.fastq.gz | wc -l)
 
 
 # Export core parameters
@@ -55,21 +55,21 @@ fi
 export testdir
 
 # Step 0: Data Transfer
-rawdir="${workdir}/rawdir/masura_test"
+rawdir="${workdir}/rawdir/Ea/trimmed" #${workdir} #salmon"
 if [[ ! -d "${rawdir}" ]]; then 
 	mkdir "${rawdir}" 
 fi
 export rawdir
 
 # STEP 1A:
-qcdir="${workdir}/qc_results_array/Ealbidus"
+qcdir="${workdir}/qc_results_array/Ealbidus/cu" #Salmon"
 if [[ ! -d "${qcdir}" ]]; then 
 	mkdir "${qcdir}" 
 fi 
 export qcdir
 
 # STEP 2A:
-trimdir="${workdir}/trim_files_2/Ealbidus/sing_test"
+trimdir="${workdir}/trim_files_2/Ealbidus/cu" # Salmon"
 if [[ ! -d "${trimdir}" ]]; then 
 	mkdir "${trimdir}" 
 fi
@@ -79,42 +79,42 @@ export trimdir
 # define in step 1
 
 # STEP 2B:
-krakendir="${workdir}/kraken_all/kraken_Gbull"
+krakendir="${workdir}/kraken_all/Salmon" # Salmon"
 if [[ ! -d "${krakendir}" ]]; then
         mkdir "${krakendir}"
 fi
 export krakendir
 
 # STEP 2C:
-rcordir="${workdir}/rcorrector/rcorrector_Gbull"
+rcordir="${workdir}/rcorrector/rcorrector_Salmon" # rcorrector_Salmon"
 if [[ ! -d "${rcordir}" ]]; then
         mkdir "${rcordir}"
 fi
 export rcordir
 
-#STEP 3: Assembly # begin with trinity_
-assemblydir="${workdir}/assembly/masurca_Gbull_assembly"
+#STEP 3: Assembly
+assemblydir="${workdir}/assembly/flye_assembly_Salmon" #trinity_Salmon_assembly ### trinity de novo generated assembly will be placed in this directory
 if [[ ! -d "${assemblydir}" ]]; then
         mkdir "${assemblydir}"
 fi
 export assemblydir
 
 #STEP 4: Evigene
-evigenedir="${workdir}/evigene_all/evigene_Ealbidus"
+evigenedir="${workdir}/evigene_all/evigene_Ealbidus/wild"
 if [[ ! -d "${evigenedir}" ]]; then
         mkdir "${evigenedir}"
 fi
 export evigenedir
 
 #STEP 5: Busco
-buscodir="${workdir}/busco_all/busco_Ealbidus"
+buscodir="${workdir}/busco_all/busco_Ealbidus/wild"
 if [[ ! -d "${buscodir}" ]]; then
         mkdir "${buscodir}"
 fi
 export buscodir
 
 #STEP 6: trinity mapping
-rsemdir="${workdir}/rsem/rsem_Ealbidus"
+rsemdir="${workdir}/rsem/rsem_Ealbidus/wild"
 if [[ ! -d "${rsemdir}" ]]; then
         mkdir "${rsemdir}"
 fi
@@ -127,7 +127,7 @@ metadata=${pipedir}/metadata.txt
 export metadata
 
 #STEP 8: multiqc
-multiqcdir="${workdir}/multiqc/multiqc_Ealbidus"
+multiqcdir="${workdir}/multiqc/multiqc_Ealbidus/wild"
 if [[ ! -d "${multiqcdir}" ]]; then
         mkdir "${multiqcdir}"
 fi
@@ -141,23 +141,29 @@ fi
 export blastdb
 
 #Step 10: Blastp Evigene Translation
-blastout="${workdir}/blastdir/blastdir_Ealbidus"
+blastout="${workdir}/blastdir/blastdir_Ealbidus/wild"
 if [[ ! -d "${blastout}" ]]; then
         mkdir "${blastout}"
 fi
 export blastout
 
 #Step 11: Import annotation from Uniprot - unimapi
-upimapi="${workdir}/upimapi_all/upimapi_Ealbidus"
+upimapi="${workdir}/upimapi_all/upimapi_Ealbidus/wild/interpro"
 if [[ ! -d "${upimapi}" ]]; then
         mkdir "${upimapi}"
 fi
 export upimapi
 
 #Step 12: Prepare upimapi results and compile them innto a database
-mergedir="${workdir}/mergedir/merge_Ealbidus"
+mergedir="${workdir}/mergedir/merge_cu"
 if [[ ! -d "${mergedir}" ]]; then
         mkdir "${mergedir}"
 fi
 export mergedir
 
+#Step 13: run another round of blast on single copy BUSCO
+busco_blast="${workdir}/busco_blast"
+if [[ ! -d "${busco_blast}" ]]; then
+        mkdir "${busco_blast}"
+fi
+export busco_blast
