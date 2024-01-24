@@ -79,7 +79,7 @@ isoform_counts=\$(ls "${rsemdir}/"*"/RSEM.isoforms.results")
                --name_sample_by_basedir --est_method RSEM \${isoform_counts} \
                --out_prefix "${rsemdir}/${assembly}_RSEM"
 
-\$TRINITY_HOME/util/misc/count_matrix_features_given_MIN_TPM_threshold.pl  "${rsemdir}/${assembly}_RSEM.gene.TPM.not_cross_norm" | tee "${rsemdir}/${assembly}_RSEM.qgenes_matrix.TPM.not_cross_norm.counts_by_min_TPM"
+\$TRINITY_HOME/util/misc/count_matrix_features_given_MIN_TPM_threshold.pl "${rsemdir}/${assembly}_RSEM.gene.TPM.not_cross_norm" | tee "${rsemdir}/${assembly}_RSEM.qgenes_matrix.TPM.not_cross_norm.counts_by_min_TPM"
 
 #$TRINITY_HOME/util/filter_low_expr_transcripts.pl
 #other analysis can be for https://github.com/trinityrnaseq/trinityrnaseq/wiki/Trinity-Differential-Expression

@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=pipeline
-#SBATCH --partition=jumbo
+#SBATCH --partition=defq
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --cpus-per-task=1

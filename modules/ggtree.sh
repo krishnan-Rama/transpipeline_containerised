@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
-#SBATCH --partition=epyc       # the requested queue
+#SBATCH --partition=jumbo       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=4      #
-#SBATCH --mem-per-cpu=1000     # in megabytes, unless unit explicitly stated
+#SBATCH --mem-per-cpu=64000     # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
 echo "================================="
@@ -23,7 +23,13 @@ cat $0
 # load singularity module
 module load singularity/3.8.7
 
-IMAGE_NAME=figtree:1.4.4--hdfd78af_1
+# Define the path to your Newick file
+newick_file="/mnt/scratch/c23048124/pipeline_all/workdir/busco_blast/bl_tree.raxml.support"
+
+# Define the output image file name
+output_image="/mnt/scratch/c23048124/pipeline_all/workdir/busco_blast/tree_visualization.png"
+
+IMAGE_NAME=bioconductor-ggtree:3.8.0--r43hdfd78af_0
 # SINGULARITY_IMAGE_NAME=fastp-0.20.0.sif
 
 if [ -f ${pipedir}/singularities/${IMAGE_NAME} ]; then
@@ -38,26 +44,24 @@ echo ${singularities}
 SINGIMAGEDIR=${pipedir}/singularities
 SINGIMAGENAME=${IMAGE_NAME}
 
-# Set working directory 
+# Set working directory
 WORKINGDIR=${pipedir}
 
 # set folders to bind into container
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
-# Define the input tree file and output PDF file
-TREE_FILE="${moduledir}/OrthoFinder_source/ExampleData_2/OrthoFinder/Results_Sep26/Phylogenetic_Hierarchical_Orthogroups/N0.nwk"
-OUTPUT_PDF="${workdir}/phylogenetic_tree.pdf"
-
 ############# SOURCE COMMANDS ##################################
-cat >${log}/phylo_tree_${SLURM_JOB_ID}.sh <<EOF
+cat >${log}/ggtree_${SLURM_JOB_ID}.sh <<EOF
+#!/bin/bash
 
-# Visualize the tree with FigTree
-figtree $TREE_FILE
+# Load R module
+module load R/4.3.1
 
-# Export the tree as a PDF file
-xvfb-run -a -s "-screen 0 1920x1080x24" figtree -graphic PDF $OUTPUT_PDF
+# Run R script to create and save the plot
+Rscript -e "library(ggtree); tree <- read.tree('$newick_file'); p <- ggtree(tree) + geom_tiplab(); ggsave('$output_image', plot = p)"
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
 
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/phylo_tree_${SLURM_JOB_ID}.sh
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/ggtree_${SLURM_JOB_ID}.sh
+

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
-#SBATCH --partition=jumbo
+#SBATCH --partition=epyc
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=64
-#SBATCH --mem=300000
+#SBATCH --mem=300GB
 
 echo "Some Usable Environment Variables:"
 echo "================================="
@@ -42,9 +42,10 @@ BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 # convert mem to GB
 TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
 
+
 # Path to your reads
-READ1="${rawdir}/All_trim_R1.fastq"
-READ2="${rawdir}/All_trim_R2.fastq"
+# READ1="${rcordir}/${assembly}.cor.fq.gz"
+# READ2="${rcordir}/${assembly}_2.fastq"
 
 ############# SOURCE COMMANDS ##################################
 cat >${WORKINGDIR}/masurca_assembly_commands_${SLURM_JOB_ID}.sh <<EOF
@@ -52,7 +53,7 @@ cat >${WORKINGDIR}/masurca_assembly_commands_${SLURM_JOB_ID}.sh <<EOF
 # Create a configuration file for MaSuRCA
 cat > masurca_config.txt << EOL
 DATA
-PE= pe 300 20 $READ1 $READ2
+PE= pe 300 20 /mnt/scratch/c23048124/pipeline_all/workdir/kraken_all/Salmon/merged.fastq.gz
 END
 
 PARAMETERS
@@ -62,7 +63,7 @@ LIMIT_JUMP_COVERAGE = 300
 CA_PARAMETERS =  cgwErrorRate=0.25
 KMER_COUNT_THRESHOLD = 1
 NUM_THREADS = ${SLURM_CPUS_PER_TASK}
-JF_SIZE = 500000000
+JF_SIZE = 1800000000
 DO_HOMOPOLYMER_TRIM = 0
 SOAP_ASSEMBLY = 1
 END
@@ -82,3 +83,4 @@ EOF
 
 singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${WORKINGDIR}/masurca_assembly_commands_${SLURM_JOB_ID}.sh
 
+mv ${WORKINGDIR}/masurca_assembly_commands_${SLURM_JOB_ID}.sh ${WORKINGDIR}/masurca_assembly

@@ -42,9 +42,6 @@ WORKINGDIR=${pipedir}
 # set folders to bind into container
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
-############# SOURCE COMMANDS ##################################
-cat >${log}/fastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
-
 declare -a blastlib=(\
 sprot
 Hsap
@@ -54,7 +51,10 @@ Cele
 Scer
 )
 
-blastp -query  "${evigenedir}/okayset/${assembly}.okay.aa" \
+############# SOURCE COMMANDS ##################################
+cat >${log}/blastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
+
+blastp -query "${evigenedir}/okayset/${assembly}.okay.aa" \
        -db "${blastdb}/${blastlib[${SLURM_ARRAY_TASK_ID}]}" \
        -num_threads ${SLURM_CPUS_PER_TASK} \
        -max_target_seqs 1 \
@@ -65,4 +65,4 @@ blastp -query  "${evigenedir}/okayset/${assembly}.okay.aa" \
 EOF
 ################ END OF SOURCE COMMANDS ######################
 
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/fastp_trimming_commands_${SLURM_JOB_ID}.sh
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/blastp_trimming_commands_${SLURM_JOB_ID}.sh

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
-#SBATCH --partition=jumbo
+#SBATCH --partition=epyc
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=64
@@ -40,11 +40,11 @@ SINGIMAGENAME=${IMAGE_NAME}
 TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
 
 # Define input files
-read1="${rcordir}/${assembly}_1.cor.fq.gz"
-read2="${rcordir}/${assembly}_2.cor.fq.gz"
+read1="${krakendir}/${assembly}.fastq.gz"
+#read2="${rcordir}/${assembly}_2.cor.fq.gz"
 
 # Define the output directory and assembly name
-output_dir="${workdir}/assembly/flye_assembly"
+output_dir="${workdir}/assembly/flye_assembly_Salmon"
 mkdir -p "$output_dir"
 
 WORKINGDIR=${pipedir}
@@ -56,9 +56,8 @@ cat >${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh <<EOF
 # Run Flye with specified parameters
 flye --threads ${SLURM_CPUS_PER_TASK} \
      --out-dir "$output_dir" \
-     --iterations 2 \
-     --meta \
-     --pacbio-raw "$read1" "$read2"
+     --nano-raw "$read1" \
+     --genome-size 0.8g
 
 echo "Assembly complete!"
 
