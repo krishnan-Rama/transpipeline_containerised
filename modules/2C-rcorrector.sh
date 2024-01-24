@@ -1,11 +1,19 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
+<<<<<<< HEAD
 #SBATCH --partition=epyc       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=16      #
 #SBATCH --mem-per-cpu=20000     # in megabytes, unless unit explicitly stated
+=======
+#SBATCH --partition=mammoth       # the requested queue
+#SBATCH --nodes=1              # number of nodes to use
+#SBATCH --tasks-per-node=1     #
+#SBATCH --cpus-per-task=16      #
+#SBATCH --mem-per-cpu=80000     # in megabytes, unless unit explicitly stated
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 
 echo "Some Usable Environment Variables:"
@@ -33,6 +41,7 @@ if [ -f ${pipedir}/singularities/${IMAGE_NAME} ]; then
     echo "Singularity image does not exist"
     wget -O ${pipedir}/singularities/${IMAGE_NAME} https://depot.galaxyproject.org/singularity/$IMAGE_NAME
 fi
+<<<<<<< HEAD
 
 echo ${singularities}
 
@@ -55,3 +64,26 @@ EOF
 
 singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh
 
+=======
+
+echo ${singularities}
+
+SINGIMAGEDIR=${pipedir}/singularities
+SINGIMAGENAME=${IMAGE_NAME}
+
+# Set working directory 
+WORKINGDIR=${pipedir}
+
+# set folders to bind into container
+export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
+
+############# SOURCE COMMANDS ##################################
+cat >${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh <<EOF
+
+run_rcorrector.pl -1 ${krakendir}/*_1.fastq.gz -2 ${krakendir}/*_2.fastq.gz  -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
+
+EOF
+################ END OF SOURCE COMMANDS ######################
+
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25

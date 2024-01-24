@@ -21,7 +21,11 @@ source config.parameters_all
 # PROCESS - FastQC raw data
 # qcfiles=${rawdir}
 # export qcfiles
+<<<<<<< HEAD
 # sbatch --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1-fastqc_array.sh"
+=======
+sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" --array="1-${sample_number}%10" "${moduledir}/1-fastqc_array.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 2A: Fastp trimming
 # -- Trim adapters and low-quality bases from raw data using Fastp.
@@ -30,7 +34,11 @@ source config.parameters_all
 # WORK: trimdir, qcdir
 # OUTPUT: null
 # PROCESS - trim
+<<<<<<< HEAD
 # sbatch --error="${log}/fastp_%J.err" --output="${log}/fastp_%J.out" "${moduledir}/2A-fastp_array.sh"  
+=======
+sbatch -d singleton --error="${log}/fastp_%J.err" --output="${log}/fastp_%J.out" --array="1-${sample_number}%10" "${moduledir}/2A-fastp_array.sh"  
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 1B: FastQC on trimmed data
 # -- Run FastQC on trimmed data to assess data quality after trimming.
@@ -41,7 +49,7 @@ source config.parameters_all
 # PROCESS - FastQC trim data
 # qcfiles=${trimdir}
 # export qcfiles
-# sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" --array="1-${sample_number}%10" "${moduledir}/1-fastqc_array.sh"
+sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" --array="1-${sample_number}%10" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2B: Kraken2 on trimmed data (kraken.sh) + filtering contaminant reads (2B-kraken2.sh)
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
@@ -50,8 +58,13 @@ source config.parameters_all
 # WORK: krakendir
 # OUTPUT: kraken2
 # PROCESS - kraken2 trim data
+<<<<<<< HEAD
 # sbatch --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" "${moduledir}/kraken.sh"
 # sbatch --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" "${moduledir}/2B-kraken2.sh"
+=======
+sbatch -d singleton --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" --array="1-${sample_number}%10" "${moduledir}/kraken.sh"
+sbatch -d singleton --error="${log}/kraken2_%J.err" --output="${log}/kraken2__%J.out" --array="1-${sample_number}%10" "${moduledir}/2B-kraken2.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 2C: rcorrector on kraken2 file
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
@@ -60,7 +73,11 @@ source config.parameters_all
 # WORK: rcordir
 # OUTPUT: 
 # PROCESS - rcorrector trim data
+<<<<<<< HEAD
 # sbatch --error="${log}/rcor_%J.err" --output="${log}/rcor__%J.out" "${moduledir}/2C-rcorrector.sh"
+=======
+sbatch -d singleton --error="${log}/rcor_%J.err" --output="${log}/rcor__%J.out" --array="1-${sample_number}%10" "${moduledir}/2C-rcorrector.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 3: assembly (Trinity, MaSuRCA & Flye)
 # -- Perform transcriptome assembly using Trinity.
@@ -69,9 +86,15 @@ source config.parameters_all
 # WORK: assemblydir
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
+<<<<<<< HEAD
 # sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
 # sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
 # sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
+=======
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # step 3A: Check genome coverage using BWA and samtools
 # sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/coverage.sh"
@@ -83,7 +106,7 @@ source config.parameters_all
 # WORK: evigenedir
 # OUTPUT: okayset
 # PROCESS - evigene
-# sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
+sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
 
 # Step 5: BUSCO analysis
 # -- Run BUSCO to assess completeness of the assembly.
@@ -92,7 +115,7 @@ source config.parameters_all
 # WORK: buscodir
 # OUTPUT: summary ??
 # PROCESS - Busco
-# sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
+sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
 
 # Step 6: trinity mapping
 # comments
@@ -101,7 +124,11 @@ source config.parameters_all
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity mapping
+<<<<<<< HEAD
 # sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" "${moduledir}/6-trinity-mapping.sh"
+=======
+sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" --array="1-${sample_number}%6" "${moduledir}/6-trinity-mapping.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 7: Summary stats and diff expression
 # comments
@@ -110,7 +137,7 @@ source config.parameters_all
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity post analysis
-# sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
+sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
 
 # Step 8: MultiQC report
 # -- Generate a MultiQC report to summarize the results of all previous steps.
@@ -119,7 +146,7 @@ source config.parameters_all
 # WORK: multiqc
 # OUTPUT: multiqc
 # PROCESS - multiqc
-# sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
+sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
 
 # Step 9: Blastdb - download and make
 # -- Download and configure blast databases
@@ -128,7 +155,7 @@ source config.parameters_all
 # WORK: blastdb
 # OUTPUT: 
 # PROCESS - blastdb download and configure
-# sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
+sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
 
 # Step 10: multispecies blast
 # comments
@@ -137,7 +164,11 @@ source config.parameters_all
 # WORK: blastout
 # OUTPUT: 
 # PROCESS - blastp
+<<<<<<< HEAD
 # sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
+=======
+sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
 # Step 11: Extract annotation from Uniprot
 # comments
@@ -146,11 +177,16 @@ source config.parameters_all
 # WORK: unimapi
 # OUTPUT:
 # PROCESS - Annotation extraction
+<<<<<<< HEAD
 # sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
+=======
+sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 
-# Step 12: Extract orthologs and create a phylogeny tree
+# Step 12: Extract orthologs from local genome database
 # sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
 
+<<<<<<< HEAD
 # step 13: create phylogenetic tree
  sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
 
@@ -160,3 +196,7 @@ source config.parameters_all
 # step 15: Blast on single copy BUSCO genes
 # sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
 
+=======
+# step 13: Create phylogenetic tree from orthologs retrieved 
+# sbatch --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/figtree.sh"
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25

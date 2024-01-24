@@ -52,9 +52,15 @@ Scer
 )
 
 ############# SOURCE COMMANDS ##################################
+<<<<<<< HEAD
 cat >${log}/blastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
 
 blastp -query "${evigenedir}/okayset/${assembly}.okay.aa" \
+=======
+cat >${log}/fastp_trimming_commands_${SLURM_JOB_ID}.sh <<EOF
+
+blastp -query  "${evigenedir}/okayset/${assembly}.okay.aa" \
+>>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
        -db "${blastdb}/${blastlib[${SLURM_ARRAY_TASK_ID}]}" \
        -num_threads ${SLURM_CPUS_PER_TASK} \
        -max_target_seqs 1 \
