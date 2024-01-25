@@ -1,21 +1,13 @@
 #!/bin/bash
 
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
-<<<<<<< HEAD
 sourcedir="/mnt/scratch/c23048124/pipeline_all//outdir/Ea/trimmed"
-=======
-sourcedir="/your/source/directory" ### This location contains the raw reads  
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
 
 #define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
 current_date=$(date +%d%m%y)  # Get the current date in the desired format
-<<<<<<< HEAD
-assembly="merged" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
-=======
-assembly="[sample name]" ### Put the name of your raw read file before the .fastq/fasta extension e.g "Hsap_130923" "Dmel_020823" "PscaXX_260723" 
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
+assembly="Ealbidus_130923_wild" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
 
 
 ## Make workdir and output directories
@@ -25,19 +17,19 @@ log="${workdir}/log/blast"
 singularitydir="${pipedir}/singularities"
 
 if [[ ! -d ${workdir} ]]; then 
-	mkdir -p ${workdir}
+	mkdir ${workdir}
 fi
 
 if [[ ! -d "${outdir}" ]]; then 
-	mkdir -p "${outdir}" 
+	mkdir "${outdir}" 
 fi
 
 if [[ ! -d "${log}" ]]; then
-        mkdir -p "${log}"
+        mkdir "${log}"
 fi
 
 if [[ ! -d "${singularitydir}" ]]; then
-        mkdir -p "${singularitydir}"
+        mkdir "${singularitydir}"
 fi
 
 # count number of samples, reads
@@ -55,37 +47,31 @@ export sample_number
 export assembly
 export singularitydir
 
+# Step Test: Script Test
+testdir="/mnt/scratch/c23048124/raw_100K"
+if [[ ! -d "${testdir}" ]]; then
+        mkdir "${testdir}"
+fi
+export testdir
 
 # Step 0: Data Transfer
-<<<<<<< HEAD
 rawdir="${workdir}/rawdir/Ea/trimmed" #${workdir} #salmon"
-=======
-rawdir="${workdir}/rawdir" ### Place your sequenced raw reads in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${rawdir}" ]]; then 
-	mkdir -p "${rawdir}" 
+	mkdir "${rawdir}" 
 fi
 export rawdir
 
 # STEP 1A:
-<<<<<<< HEAD
 qcdir="${workdir}/qc_results_array/Ealbidus/cu" #Salmon"
-=======
-qcdir="${workdir}/qc_results"  ### fastQC generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${qcdir}" ]]; then 
-	mkdir -p "${qcdir}" 
+	mkdir "${qcdir}" 
 fi 
 export qcdir
 
 # STEP 2A:
-<<<<<<< HEAD
 trimdir="${workdir}/trim_files_2/Ealbidus/cu" # Salmon"
-=======
-trimdir="${workdir}/trim_files"  ### fastP generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${trimdir}" ]]; then 
-	mkdir -p "${trimdir}" 
+	mkdir "${trimdir}" 
 fi
 export trimdir
 
@@ -93,122 +79,85 @@ export trimdir
 # define in step 1
 
 # STEP 2B:
-<<<<<<< HEAD
 krakendir="${workdir}/kraken_all/Salmon" # Salmon"
-=======
-krakendir="${workdir}/kraken_files" ### krake.sh generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${krakendir}" ]]; then
-        mkdir -p "${krakendir}"
+        mkdir "${krakendir}"
 fi
 export krakendir
 
 # STEP 2C:
-<<<<<<< HEAD
 rcordir="${workdir}/rcorrector/rcorrector_Salmon" # rcorrector_Salmon"
-=======
-rcordir="${workdir}/rcorrector" ### rcorrector generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${rcordir}" ]]; then
-        mkdir -p "${rcordir}"
+        mkdir "${rcordir}"
 fi
 export rcordir
 
-<<<<<<< HEAD
 #STEP 3: Assembly
-assemblydir="${workdir}/assembly/flye_assembly_Salmon" #trinity_Salmon_assembly ### trinity de novo generated assembly will be placed in this directory
-=======
-#STEP 3: Assembly 
-assemblydir="${workdir}/trinity_assembly" ### trinity de novo generated assembly will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
+assemblydir="${workdir}/assembly/flye_assembly_Salmon" #trinity_Salmon_assembly 
 if [[ ! -d "${assemblydir}" ]]; then
-        mkdir -p "${assemblydir}"
+        mkdir "${assemblydir}"
 fi
 export assemblydir
 
 #STEP 4: Evigene
-<<<<<<< HEAD
 evigenedir="${workdir}/evigene_all/evigene_Ealbidus/wild"
-=======
-evigenedir="${workdir}/evigene"  ### EvidentialGene generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${evigenedir}" ]]; then
-        mkdir -p "${evigenedir}"
+        mkdir "${evigenedir}"
 fi
 export evigenedir
 
 #STEP 5: Busco
-<<<<<<< HEAD
 buscodir="${workdir}/busco_all/busco_Ealbidus/wild"
-=======
-buscodir="${workdir}/busco" ### fastQC generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${buscodir}" ]]; then
-        mkdir -p "${buscodir}"
+        mkdir "${buscodir}"
 fi
 export buscodir
 
 #STEP 6: trinity mapping
-<<<<<<< HEAD
 rsemdir="${workdir}/rsem/rsem_Ealbidus/wild"
-=======
-rsemdir="${workdir}/rsem"  ### RSEM generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${rsemdir}" ]]; then
-        mkdir -p "${rsemdir}"
+        mkdir "${rsemdir}"
 fi
 export rsemdir
 
 #STEP 6: trinity post analsyis
 #conditionA	sample1
 #conditionB	sample2
-#metadata=${pipedir}/metadata.txt
-#export metadata
+metadata=${pipedir}/metadata.txt
+export metadata
 
 #STEP 8: multiqc
-<<<<<<< HEAD
 multiqcdir="${workdir}/multiqc/multiqc_Ealbidus/wild"
-=======
-multiqcdir="${workdir}/multiqc"  ### multiQC generated results will be placed in this directory
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${multiqcdir}" ]]; then
-        mkdir -p "${multiqcdir}"
+        mkdir "${multiqcdir}"
 fi
 export multiqcdir
 
 #Step 9: Blastdb download and formatting
 blastdb="${pipedir}/blastdb"
 if [[ ! -d "${blastdb}" ]]; then
-        mkdir -p "${blastdb}"
+        mkdir "${blastdb}"
 fi
 export blastdb
 
 #Step 10: Blastp Evigene Translation
-<<<<<<< HEAD
 blastout="${workdir}/blastdir/blastdir_Ealbidus/wild"
-=======
-blastout="${workdir}/blastdir"
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${blastout}" ]]; then
-        mkdir -p "${blastout}"
+        mkdir "${blastout}"
 fi
 export blastout
 
 #Step 11: Import annotation from Uniprot - unimapi
-<<<<<<< HEAD
 upimapi="${workdir}/upimapi_all/upimapi_Ealbidus/wild/interpro"
-=======
-upimapi="${workdir}/upimapi"
->>>>>>> 2bf5f5298269d310bb79a20dabfee53d419baf25
 if [[ ! -d "${upimapi}" ]]; then
-        mkdir -p "${upimapi}"
+        mkdir "${upimapi}"
 fi
 export upimapi
 
 #Step 12: Prepare upimapi results and compile them innto a database
 mergedir="${workdir}/mergedir/merge_cu"
 if [[ ! -d "${mergedir}" ]]; then
-        mkdir -p "${mergedir}"
+        mkdir "${mergedir}"
 fi
 export mergedir
 
