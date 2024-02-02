@@ -48,7 +48,7 @@ export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 ############# SOURCE COMMANDS ##################################
 cat >${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh <<EOF
 
-run_rcorrector.pl -s ${krakendir}/*.fastq.gz -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
+run_rcorrector.pl -1 ${krakendir}/*_1.fastq.gz -2 ${krakendir}/*_2.fastq.gz -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
