@@ -74,8 +74,10 @@ source config.parameters_all
  sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
  sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
 
-# Step 3A:Ppost de novo assembly polishing (Trinity, MaSuRCA & Flye)
-# Align raw read onto draft assembly for error correction (minimap2; .sam file), create polished assembly using racon by using .sam alignmnet info, then medaka. 
+# Step 3A:Post de novo assembly polishing (Trinity, MaSuRCA & Flye)
+# Align raw read onto draft assembly for error correction (minimap2; .sam file)  
+# INPUT: Draft assembly (fasta) & raw reads
+#create polished assembly using racon by using .sam alignmnet info, then medaka. 
 sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/minimap2.sh"
 sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/racon.sh"
 sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/medaka.sh"
