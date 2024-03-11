@@ -13,7 +13,7 @@ assembly="merged" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace t
 ## Make workdir and output directories
 workdir="${pipedir}/workdir"
 outdir="${pipedir}/outdir"
-log="${workdir}/log/sbainsii"
+log="${workdir}/log"
 singularitydir="${pipedir}/singularities"
 
 if [[ ! -d ${workdir} ]]; then 
