@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
-sourcedir="/mnt/scratch/c23048124/pipeline_all/outdir/Ea/trimmed"
+sourcedir="/path/to/rawreads/"
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
 
