@@ -69,21 +69,21 @@ source config.parameters_all
 # WORK: assemblydir
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
- sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
  sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
- sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
- sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
 
 # Step 3A:Post de novo assembly polishing (Trinity, MaSuRCA & Flye)
 # Align raw read onto draft assembly for error correction (minimap2; .sam file)  
 # INPUT: Draft assembly (fasta) & raw reads
 #create polished assembly using racon by using .sam alignmnet info, then medaka. 
-sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/minimap2.sh"
-sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/racon.sh"
-sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/medaka.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/minimap2.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/racon.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/medaka.sh"
 
 # step 3A: Check genome coverage using BWA and samtools
- sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/coverage.sh"
+# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/coverage.sh"
 
 # Step 4: evigene
 # -- Run evigene for gene annotation.
@@ -92,7 +92,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: evigenedir
 # OUTPUT: okayset
 # PROCESS - evigene
- sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
+# sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
 
 # Step 5: BUSCO analysis
 # -- Run BUSCO to assess completeness of the assembly.
@@ -101,7 +101,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: buscodir
 # OUTPUT: summary ??
 # PROCESS - Busco
- sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
+# sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
 
 # Step 6: trinity mapping
 # comments
@@ -110,7 +110,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity mapping
- sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" "${moduledir}/6-trinity-mapping.sh"
+# sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" "${moduledir}/6-trinity-mapping.sh"
 
 # Step 7: Summary stats and diff expression
 # comments
@@ -119,7 +119,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity post analysis
- sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
+# sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
 
 # Step 8: MultiQC report
 # -- Generate a MultiQC report to summarize the results of all previous steps.
@@ -128,7 +128,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: multiqc
 # OUTPUT: multiqc
 # PROCESS - multiqc
- sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
+# sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
 
 # Step 9: Blastdb - download and make
 # -- Download and configure blast databases
@@ -137,7 +137,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: blastdb
 # OUTPUT: 
 # PROCESS - blastdb download and configure
- sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
+# sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
 
 # Step 10: multispecies blast
 # comments
@@ -146,7 +146,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: blastout
 # OUTPUT: 
 # PROCESS - blastp
- sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
+# sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
 
 # Step 11: Extract annotation from Uniprot
 # comments
@@ -155,16 +155,16 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: unimapi
 # OUTPUT:
 # PROCESS - Annotation extraction
- sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
+# sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
 
 # Step 12: Extract orthologs and create a phylogeny tree
- sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
+# sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
 
 # step 13: create phylogenetic tree
- sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
+# sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
 
 # step 14: Molecular docking using autodock vina
- sbatch --error="${log}/vina_%J.err" --output="${log}/vina_%J.out" "${moduledir}/vina.sh"
+# sbatch --error="${log}/vina_%J.err" --output="${log}/vina_%J.out" "${moduledir}/vina.sh"
 
 # step 15: Blast on single copy BUSCO genes
  sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
