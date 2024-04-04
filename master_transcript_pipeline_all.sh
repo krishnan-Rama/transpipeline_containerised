@@ -92,7 +92,7 @@ source config.parameters_all
 # WORK: evigenedir
 # OUTPUT: okayset
 # PROCESS - evigene
-# sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
+ sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
 
 # Step 5: BUSCO analysis
 # -- Run BUSCO to assess completeness of the assembly.
@@ -101,7 +101,7 @@ source config.parameters_all
 # WORK: buscodir
 # OUTPUT: summary ??
 # PROCESS - Busco
-# sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
+ sbatch -d singleton --error="${log}/busco_%J.err" --output="${log}/busco_%J.out" "${moduledir}/5-busco_singularity.sh"
 
 # Step 6: trinity mapping
 # comments
@@ -128,7 +128,7 @@ source config.parameters_all
 # WORK: multiqc
 # OUTPUT: multiqc
 # PROCESS - multiqc
-# sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
+ sbatch -d singleton --error="${log}/multiqc_%J.err" --output="${log}/multiqc_%J.out" "${moduledir}/8-multiqc.sh"
 
 # Step 9: Blastdb - download and make
 # -- Download and configure blast databases
@@ -137,7 +137,7 @@ source config.parameters_all
 # WORK: blastdb
 # OUTPUT: 
 # PROCESS - blastdb download and configure
-# sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
+ sbatch -d singleton --error="${log}/blastdb_%J.err" --output="${log}/blastdb_%J.out" "${moduledir}/9-blastdb.sh"
 
 # Step 10: multispecies blast
 # comments
@@ -146,7 +146,7 @@ source config.parameters_all
 # WORK: blastout
 # OUTPUT: 
 # PROCESS - blastp
-# sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
+ sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
 
 # Step 11: Extract annotation from Uniprot
 # comments
@@ -155,7 +155,7 @@ source config.parameters_all
 # WORK: unimapi
 # OUTPUT:
 # PROCESS - Annotation extraction
-# sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
+ sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
 
 # Step 12: Extract orthologs and create a phylogeny tree
 # sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
