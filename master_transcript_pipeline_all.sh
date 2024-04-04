@@ -110,7 +110,7 @@ source config.parameters_all
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity mapping
-# sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" "${moduledir}/6-trinity-mapping.sh"
+ sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" --array="0-5" "${moduledir}/6-trinity-mapping.sh"
 
 # Step 7: Summary stats and diff expression
 # comments
