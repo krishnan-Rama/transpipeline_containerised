@@ -169,3 +169,7 @@ source config.parameters_all
 # step 15: Blast on single copy BUSCO genes
  sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
 
+# BLOBTOOLS
+#sbatch -d singleton --error="${log}/blobtools_%J.err" --output="${log}/blobtools_%J.out" "${moduledir}/blobtools.sh"
+#sbatch -d singleton --error="${log}/blobviewer_%J.err" --output="${log}/blobviewer_%J.out" "${moduledir}/blobviewer.sh"
+ 
