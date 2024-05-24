@@ -55,21 +55,21 @@ fi
 export testdir
 
 # Step 0: Data Transfer
-rawdir="${workdir}/rawdir/leaf" #${workdir} #salmon"
+rawdir="${workdir}/rawdir" #${workdir} #salmon"
 if [[ ! -d "${rawdir}" ]]; then 
 	mkdir "${rawdir}" 
 fi
 export rawdir
 
 # STEP 1A:
-qcdir="${workdir}/qc_results_array/leaf" #Salmon"
+qcdir="${workdir}/qc_results_array" #Salmon"
 if [[ ! -d "${qcdir}" ]]; then 
 	mkdir "${qcdir}" 
 fi 
 export qcdir
 
 # STEP 2A:
-trimdir="${workdir}/trim_files_2/leaf" # Salmon"
+trimdir="${workdir}/trim_files_2" # Salmon"
 if [[ ! -d "${trimdir}" ]]; then 
 	mkdir "${trimdir}" 
 fi
@@ -79,42 +79,42 @@ export trimdir
 # define in step 1
 
 # STEP 2B:
-krakendir="${workdir}/kraken_all/leaf" # Salmon"
+krakendir="${workdir}/kraken_all" # Salmon"
 if [[ ! -d "${krakendir}" ]]; then
         mkdir "${krakendir}"
 fi
 export krakendir
 
 # STEP 2C:
-rcordir="${workdir}/rcorrector/rcorrector_leaf" # rcorrector_Salmon"
+rcordir="${workdir}/rcorrector" # rcorrector_Salmon"
 if [[ ! -d "${rcordir}" ]]; then
         mkdir "${rcordir}"
 fi
 export rcordir
 
 #STEP 3: Assembly
-assemblydir="${workdir}/assembly/flye_assembly_Salmon" #trinity_Salmon_assembly 
+assemblydir="${workdir}/assembly/trinity_assemby"
 if [[ ! -d "${assemblydir}" ]]; then
         mkdir "${assemblydir}"
 fi
 export assemblydir
 
 #STEP 4: Evigene
-evigenedir="${workdir}/evigene_all/evigene_Salmon"
+evigenedir="${workdir}/evigene"
 if [[ ! -d "${evigenedir}" ]]; then
         mkdir "${evigenedir}"
 fi
 export evigenedir
 
 #STEP 5: Busco
-buscodir="${workdir}/busco_all/busco_Salmon"
+buscodir="${workdir}/busco"
 if [[ ! -d "${buscodir}" ]]; then
         mkdir "${buscodir}"
 fi
 export buscodir
 
 #STEP 6: trinity mapping
-rsemdir="${workdir}/rsem/rsem_sbainsii"
+rsemdir="${workdir}/rsem"
 if [[ ! -d "${rsemdir}" ]]; then
         mkdir "${rsemdir}"
 fi
@@ -127,7 +127,7 @@ metadata=${pipedir}/metadata.txt
 export metadata
 
 #STEP 8: multiqc
-multiqcdir="${workdir}/multiqc/multiqc_sbainsii"
+multiqcdir="${workdir}/multiqc"
 if [[ ! -d "${multiqcdir}" ]]; then
         mkdir "${multiqcdir}"
 fi
@@ -141,14 +141,14 @@ fi
 export blastdb
 
 #Step 10: Blastp Evigene Translation
-blastout="${workdir}/blastdir/blastdir_sbainsii"
+blastout="${workdir}/blastdir"
 if [[ ! -d "${blastout}" ]]; then
         mkdir "${blastout}"
 fi
 export blastout
 
 #Step 11: Import annotation from Uniprot - unimapi
-upimapi="${workdir}/upimapi_all/upimapi_sbainsii"
+upimapi="${workdir}/upimapi"
 if [[ ! -d "${upimapi}" ]]; then
         mkdir "${upimapi}"
 fi
