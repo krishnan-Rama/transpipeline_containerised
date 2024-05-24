@@ -55,7 +55,7 @@ fi
 export testdir
 
 # Step 0: Data Transfer
-rawdir="${workdir}/rawdir" #${workdir} 
+rawdir="${pipedir}/raw_data"
 if [[ ! -d "${rawdir}" ]]; then 
 	mkdir "${rawdir}" 
 fi
