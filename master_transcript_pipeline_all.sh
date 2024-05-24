@@ -41,7 +41,8 @@ source config.parameters_all
 # PROCESS - FastQC trim data
 # qcfiles=${trimdir}
 # export qcfiles
- sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" --array="1-${sample_number}%10" "${moduledir}/1-fastqc_array.sh"
+ sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
+#--array="1-${sample_number}%10"
 
 # Step 2B: Kraken2 on trimmed data (kraken.sh) + filtering contaminant reads (2B-kraken2.sh)
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
