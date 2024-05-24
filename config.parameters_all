@@ -55,21 +55,21 @@ fi
 export testdir
 
 # Step 0: Data Transfer
-rawdir="${workdir}/rawdir" #${workdir} #salmon"
+rawdir="${workdir}/rawdir" #${workdir} 
 if [[ ! -d "${rawdir}" ]]; then 
 	mkdir "${rawdir}" 
 fi
 export rawdir
 
 # STEP 1A:
-qcdir="${workdir}/qc_results_array" #Salmon"
+qcdir="${workdir}/qc_results_array" 
 if [[ ! -d "${qcdir}" ]]; then 
 	mkdir "${qcdir}" 
 fi 
 export qcdir
 
 # STEP 2A:
-trimdir="${workdir}/trim_files_2" # Salmon"
+trimdir="${workdir}/trim_files" 
 if [[ ! -d "${trimdir}" ]]; then 
 	mkdir "${trimdir}" 
 fi
@@ -79,14 +79,14 @@ export trimdir
 # define in step 1
 
 # STEP 2B:
-krakendir="${workdir}/kraken_all" # Salmon"
+krakendir="${workdir}/kraken"
 if [[ ! -d "${krakendir}" ]]; then
         mkdir "${krakendir}"
 fi
 export krakendir
 
 # STEP 2C:
-rcordir="${workdir}/rcorrector" # rcorrector_Salmon"
+rcordir="${workdir}/rcorrector" 
 if [[ ! -d "${rcordir}" ]]; then
         mkdir "${rcordir}"
 fi
