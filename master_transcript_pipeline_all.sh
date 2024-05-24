@@ -21,7 +21,7 @@ source config.parameters_all
 # PROCESS - FastQC raw data
 # qcfiles=${rawdir}
 # export qcfiles
- sbatch --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1-fastqc_array.sh"
+ sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2A: Fastp trimming
 # -- Trim adapters and low-quality bases from raw data using Fastp.
@@ -30,7 +30,7 @@ source config.parameters_all
 # WORK: trimdir, qcdir
 # OUTPUT: null
 # PROCESS - trim
- sbatch --error="${log}/fastp_%J.err" --output="${log}/fastp_%J.out" "${moduledir}/2A-fastp_array.sh"  
+ sbatch -d singleton --error="${log}/fastp_%J.err" --output="${log}/fastp_%J.out" "${moduledir}/2A-fastp_array.sh"  
 
 # Step 1B: FastQC on trimmed data
 # -- Run FastQC on trimmed data to assess data quality after trimming.
@@ -69,8 +69,8 @@ source config.parameters_all
 # WORK: assemblydir
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
- sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
+ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
+# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
 # sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
 # sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
 
@@ -161,15 +161,15 @@ source config.parameters_all
  sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
 
 # step 13: create phylogenetic tree
- sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
+# sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
 
 # step 14: Molecular docking using autodock vina
- sbatch --error="${log}/vina_%J.err" --output="${log}/vina_%J.out" "${moduledir}/vina.sh"
+# sbatch --error="${log}/vina_%J.err" --output="${log}/vina_%J.out" "${moduledir}/vina.sh"
 
 # step 15: Blast on single copy BUSCO genes
- sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
+# sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
 
 # BLOBTOOLS
-sbatch -d singleton --error="${log}/blobtools_%J.err" --output="${log}/blobtools_%J.out" "${moduledir}/blobtools.sh"
-sbatch -d singleton --error="${log}/blobviewer_%J.err" --output="${log}/blobviewer_%J.out" "${moduledir}/blobviewer.sh"
+# sbatch -d singleton --error="${log}/blobtools_%J.err" --output="${log}/blobtools_%J.out" "${moduledir}/blobtools.sh"
+# sbatch -d singleton --error="${log}/blobviewer_%J.err" --output="${log}/blobviewer_%J.out" "${moduledir}/blobviewer.sh"
  
