@@ -159,7 +159,7 @@ source config.parameters_all
  sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
 
 # Step 12: Extract orthologs and create a phylogeny tree
- sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
+# sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
 
 # step 13: create phylogenetic tree
 # sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
