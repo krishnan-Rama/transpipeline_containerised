@@ -7,7 +7,7 @@ moduledir="${pipedir}/modules"
 
 #define format - First Letter of Genus (CAPS), First three letters of species (Small), lineage (if known - default XX), then date of analysis 
 current_date=$(date +%d%m%y)  # Get the current date in the desired format
-assembly="merged" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
+assembly="assembly" # "Ealbidus_130923" "Gbull_020823" "PscaXX_260723" # Replace the date portion in the assembly variable
 
 
 ## Make workdir and output directories
