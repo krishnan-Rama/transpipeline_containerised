@@ -76,7 +76,7 @@ sed -i "s/TRINITY_DN/assembly_contig_/g" "${assemblydir}/assembly.fasta"
 
 #create assembly stats
 #TrinityStats.pl on the Trinity.fasta output file
-/usr/local/bin/util/TrinityStats.pl "${assemblydir}/assembly.fasta" > "${assemblydir}/${assembly}_stats.txt"
+/usr/local/bin/util/TrinityStats.pl "${assemblydir}/assembly.fasta" > "${assemblydir}/assembly_stats.txt"
 
 #copy assembly results into output folder
 cp "${assemblydir}/assembly.fasta" "${outdir}/assembly.fasta"
