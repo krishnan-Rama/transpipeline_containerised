@@ -55,7 +55,7 @@ cat ${rcordir}/*_2.cor.fq.gz > ${rcordir}/all_2.fastq.gz
 
 Trinity --seqType fq \
         --left "${rcordir}/all_1.fastq.gz" \
-        --right "${rcordir}/all_1.fastq.gz" \
+        --right "${rcordir}/all_2.fastq.gz" \
         --max_memory ${TOTAL_RAM}G \
         --CPU ${SLURM_CPUS_PER_TASK} \
         --output "${assemblydir}/" \
