@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=pipeline
-#SBATCH --partition=defq
+#SBATCH --partition=<HPC_partition>
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --cpus-per-task=1
@@ -21,33 +21,33 @@ cat $0
 
 module load evigene/18jan01
 
-tr2aacds.pl -mrnaseq "${assemblydir}/${assembly}.fasta" -MINCDS=60 -NCPU=16 -MAXMEM=128000 -logfile -tidyup
+tr2aacds.pl -mrnaseq "${assemblydir}/assembly.fasta" -MINCDS=60 -NCPU=16 -MAXMEM=128000 -logfile -tidyup
 
 mv dropset "${evigenedir}/dropset"
 mv okayset "${evigenedir}/okayset"
-cp "${evigenedir}/okayset/${assembly}.okay.fasta" "${assemblydir}/${assembly}_okay.fasta"
+cp "${evigenedir}/okayset/assembly.okay.fasta" "${assemblydir}/assembly_okay.fasta"
 
 rm -r inputset
 rm -r tmpfiles
-rm -r ${assemblydir}/${assembly}nrcd1*
-rm "${assemblydir}/${assembly}.tr2aacds.log"
-rm "${assemblydir}/${assembly}.trclass"
-rm "${assemblydir}/${assembly}.trclass.sum.txt"
-rm "${assemblydir}/${assembly}nr.cds."*
+rm -r ${assemblydir}/assemblynrcd1*
+rm "${assemblydir}/assembly.tr2aacds.log"
+rm "${assemblydir}/assembly.trclass"
+rm "${assemblydir}/assembly.trclass.sum.txt"
+rm "${assemblydir}/assemblynr.cds."*
 rm -r "${assemblydir}/chrysalis"
 rm -r "${assemblydir}/insilico_read_normalization"
-rm -r "${assemblydir}/${assembly}_split"
+rm -r "${assemblydir}/assembly_split"
 
 module unload evigene/18jan01
 
 module load trinityrnaseq/Trinity-v2.6.6
 
-TrinityStats.pl "${assemblydir}/${assembly}_okay.fasta" > "${assemblydir}/${assembly}_okay_stats.txt"
+TrinityStats.pl "${assemblydir}/assembly_okay.fasta" > "${assemblydir}/assembly_okay_stats.txt"
 
-get_Trinity_gene_to_trans_map.pl "${assemblydir}/${assembly}_okay.fasta" > "${assemblydir}/${assembly}_okay.gene_trans_map"
+get_Trinity_gene_to_trans_map.pl "${assemblydir}/assembly_okay.fasta" > "${assemblydir}/assembly_okay.gene_trans_map"
 
-cp "${assemblydir}/${assembly}_okay.fasta" "${outdir}/${assembly}_okay.fasta"
-cp "${assemblydir}/${assembly}_okay.gene_trans_map" "${outdir}/${assembly}_okay.gene_trans_map"
-cp "${assemblydir}/${assembly}_okay_stats.txt" "${outdir}/${assembly}_okay_stats.txt"
+cp "${assemblydir}/assembly_okay.fasta" "${outdir}/assembly_okay.fasta"
+cp "${assemblydir}/assembly_okay.gene_trans_map" "${outdir}/assembly_okay.gene_trans_map"
+cp "${assemblydir}/assembly_okay_stats.txt" "${outdir}/assembly_okay_stats.txt"
 
 module unload trinityrnaseq/Trinity-v2.6.6

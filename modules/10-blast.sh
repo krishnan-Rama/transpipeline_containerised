@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=pipeline
-#SBATCH --partition=epyc       # the requested queue
+#SBATCH --partition=<HPC_partition>       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=16     #   

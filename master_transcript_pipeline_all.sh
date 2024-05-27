@@ -1,5 +1,19 @@
 #!/bin/bash
 
+read -p "Enter your preferred HPC partition name: " HPC_partition
+
+# Function to replace <HPC_partition> in a given file
+replace_partition() {
+    sed -i "s/<HPC_partition>/${HPC_partition}/g" "$1"
+}
+
+# Find all scripts in ${moduledir} that contain <HPC_partition> and replace it
+for script in "${moduledir}"/*.sh; do
+    if grep -q "<HPC_partition>" "$script"; then
+        replace_partition "$script"
+    fi
+done
+
 # Source variable script
 source config.parameters_all
 
