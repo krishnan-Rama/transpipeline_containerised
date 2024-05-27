@@ -11,12 +11,11 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 2. Put the raw reads in `raw_data` folder.  
 
-3. Modify the HPC Slurm parameters in each individual script inside `modules` directory.
+3. Run the pipeline using `./deploy.sh`.  
 
-4. Run the pipeline `master_transcript_pipeline_all.sh` using `./master_transcript_pipeline_all.sh`.  
+4. The prompt will ask you to enter your preferred HPC partition name to submit the job, simply type the name and return.
 
-   Note: You can manually run individual steps in `master_transcript_pipeline_all.sh` by hashing out `(#)` `sbatch` jobs.   
-
+ Note: You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 
 ### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
