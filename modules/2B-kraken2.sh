@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
-#SBATCH --partition=defq       # the requested queue
+#SBATCH --partition=jumbo       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=8      #
@@ -21,30 +21,31 @@ echo "\$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}"
 cat $0
 
 # Load necessary modules and activate virtual environment
-python -m venv python_kraken2
-source ${moduledir}/python_kraken/python_kraken2/bin/activate
+cd ${moduledir}
+#python -m venv python_kraken2
+source kraken_bio/bin/activate
+pip install biopython
 
 echo ${trimdir}
 
-# file=$(ls ${trimdir}/*_1.fastq.gz | sed -n ${SLURM_ARRAY_TASK_ID}p)
+# Get list of all unique base names (without _1 or _2 suffix)
+bases=$(ls ${trimdir}/*_trim_1.fastq.gz | xargs -n 1 basename | sed 's/_trim_1.fastq.gz//' | sort | uniq)
 
-# R1=$(basename $file | cut -f1 -d.)
-# base=$(echo $R1 | sed 's/_1$//')
+for base in $bases; do
+    export base
 
-# cat ${trimdir}/*_1.fastq.gz > ${trimdir}/all_1.fastq.gz
-# cat ${trimdir}/*_2.fastq.gz > ${trimdir}/all_2.fastq.gz
+    echo "Processing base name: $base"
 
-python ${moduledir}/extract_kraken_reads.py \
-		-k ${krakendir}/${assembly}_kraken2_output \
-		-s1 ${trimdir}/${assembly}_trim_1.fastq.gz \
-		-s2 ${trimdir}/${assembly}_trim_2.fastq.gz \
-		-r ${krakendir}/${assembly}_kraken2_report \
-		--exclude --include-parents --taxid 2 \
-		-o ${krakendir}/${assembly}_1.fastq \
-		-o2 ${krakendir}/${assembly}_2.fastq
-
-# rm ${trimdir}/all_1.fastq.gz
-# rm ${trimdir}/all_2.fastq.gz
+    python ${moduledir}/extract_kraken_reads.py \
+        -k ${krakendir}/${base}_kraken2_output \
+        -s1 ${trimdir}/${base}_trim_1.fastq.gz \
+        -s2 ${trimdir}/${base}_trim_2.fastq.gz \
+        -r ${krakendir}/${base}_kraken2_report \
+        --exclude --include-parents --taxid 2 \
+        -o ${krakendir}/${base}_1.fastq \
+        -o2 ${krakendir}/${base}_2.fastq
+done
 
 # Deactivate virtual environment and unload modules
 deactivate
+

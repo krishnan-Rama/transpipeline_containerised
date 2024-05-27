@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=pipeline
-#SBATCH --partition=epyc       # the requested queue
+#SBATCH --partition=jumbo       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=16      #
@@ -45,13 +45,21 @@ WORKINGDIR=${pipedir}
 # set folders to bind into container
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
+bases=$(ls ${rawdir}/*_1.fastq.gz | xargs -n 1 basename | sed 's/_1.fastq.gz//' | sort | uniq)
+
+for base in $bases; do
+    export base
+
+    # Debug: Print the base name
+    echo "Processing base name: $base"
+
 ############# SOURCE COMMANDS ##################################
 cat >${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh <<EOF
 
-run_rcorrector.pl -1 ${krakendir}/*_1.fastq.gz -2 ${krakendir}/*_2.fastq.gz -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
+run_rcorrector.pl -1 ${krakendir}/${base}_1.fastq.gz -2 ${krakendir}/${base}_2.fastq.gz -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
 
 singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh
-
+done

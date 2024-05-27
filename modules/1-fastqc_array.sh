@@ -23,11 +23,10 @@ cat $0
 module load singularity/3.8.7
 
 IMAGE_NAME=fastqc:0.12.1--hdfd78af_0
-# SINGULARITY_IMAGE_NAME=fastp-0.20.0.sif
 
 if [ -f ${pipedir}/singularities/${IMAGE_NAME} ]; then
     echo "Singularity image exists"
- else
+else
     echo "Singularity image does not exist"
     wget -O ${pipedir}/singularities/${IMAGE_NAME} https://depot.galaxyproject.org/singularity/$IMAGE_NAME
 fi
@@ -37,27 +36,28 @@ echo ${singularities}
 SINGIMAGEDIR=${pipedir}/singularities
 SINGIMAGENAME=${IMAGE_NAME}
 
-# Set working directory 
+# Set working directory
 WORKINGDIR=${pipedir}
 
 # set folders to bind into container
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
-file=$(ls ${rawdir}/*_1.fastq.gz | sed -n ${SLURM_ARRAY_TASK_ID}p)
+# Get list of all unique base names (without _1 or _2 suffix)
+bases=$(ls ${rawdir}/*_1.fastq.gz | xargs -n 1 basename | sed 's/_1.fastq.gz//' | sort | uniq)
 
-R1=$(basename $file | cut -f1 -d.)
-base=$(echo $R1 | sed 's/_1$//')
+for base in $bases; do
+    export base
 
-export base
+    ############# SOURCE COMMANDS ##################################
+    cat >${log}/fastqc_qualitycheck_commands_${SLURM_JOB_ID}.sh <<EOF
 
-############# SOURCE COMMANDS ##################################
-cat >${log}/fastqc_qualitycheck_commands_${SLURM_JOB_ID}.sh <<EOF
+    echo "Starting FastQC analysis..."
 
-echo "Starting FastQC analysis..."
-
-fastqc "${rawdir}/${base}_1.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
-fastqc "${rawdir}/${base}_2.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
+    fastqc "${rawdir}/${base}_1.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
+    fastqc "${rawdir}/${base}_2.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
 EOF
-################ END OF SOURCE COMMANDS ######################
+    ################ END OF SOURCE COMMANDS ######################
 
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/fastqc_qualitycheck_commands_${SLURM_JOB_ID}.sh
+    singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/fastqc_qualitycheck_commands_${SLURM_JOB_ID}.sh
+done
+

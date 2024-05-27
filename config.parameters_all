@@ -30,10 +30,6 @@ if [[ ! -d "${singularitydir}" ]]; then
         mkdir -p "${singularitydir}"
 fi
 
-# count number of samples, reads
-#sample_number=$(ls -l ${sourcedir}/*_1.fastq.gz | wc -l)
-
-
 # Export core parameters
 export sourcedir
 export pipedir
@@ -58,6 +54,9 @@ if [[ ! -d "${rawdir}" ]]; then
 	mkdir -p "${rawdir}" 
 fi
 export rawdir
+
+# count number of samples, reads
+#sample_number=$(ls -l ${rawdir}/*_1.fastq.gz | wc -l)
 
 # STEP 1A:
 qcdir="${workdir}/qc_results_array" 
