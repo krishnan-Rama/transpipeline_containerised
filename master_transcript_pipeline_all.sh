@@ -3,14 +3,14 @@
 # Source variable script
 source config.parameters_all
 
-# Step 0: Transfer data
+# Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
 # CORE PARAMETERS: sourcedir, rawdir
 # INPUT: sourcedir
 # WORK: rawdir
 # OUTPUT: null
 # PROCESS - File transfer
-# cp "${sourcedir}/"*.fastq.gz "${rawdir}"
+ sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/0-pre.sh"
 
 # Step 1A: FastQC on raw data
 # -- Run FastQC on raw data to assess data quality before trimming.
@@ -20,7 +20,7 @@ source config.parameters_all
 # OUTPUT: null
 # PROCESS - FastQC raw data
 # qcfiles=${rawdir}
-# export qcfiles
+# export qcfilesi
  sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2A: Fastp trimming
@@ -41,8 +41,7 @@ source config.parameters_all
 # PROCESS - FastQC trim data
 # qcfiles=${trimdir}
 # export qcfiles
- sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
-#--array="1-${sample_number}%10"
+# sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2B: Kraken2 on trimmed data (kraken.sh) + filtering contaminant reads (2B-kraken2.sh)
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
@@ -120,7 +119,7 @@ source config.parameters_all
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity post analysis
-# sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
+ sbatch -d singleton --error="${log}/deg_%J.err" --output="${log}/deg_%J.out" "${moduledir}/7-rsem-post-reassemble.sh"
 
 # Step 8: MultiQC report
 # -- Generate a MultiQC report to summarize the results of all previous steps.
