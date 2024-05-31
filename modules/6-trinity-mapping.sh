@@ -3,7 +3,7 @@
 #SBATCH --partition=<HPC_partition>       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=16      #   
+#SBATCH --cpus-per-task=8      #   
 #SBATCH --mem=150000     # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
@@ -71,9 +71,7 @@ cp ${assemblydir}/${assembly}_okay.gene_trans_map ${assemblydir}/\${base}/${asse
      --bowtie2_RSEM "--no-mixed --no-discordant --gbar 1000 -k 200 --end-to-end -N 1 --mp 4" \
       --output_dir ${rsemdir}/\${base}
 
-rm -r ${assemblydir}/\${base}/
-
 EOF
 ################ END OF SOURCE COMMANDS ######################
-
+#rm -r ${assemblydir}/\${base}/
 singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/trinity_mapping_commands_${SLURM_JOB_ID}.sh
