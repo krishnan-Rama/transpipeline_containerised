@@ -7,15 +7,15 @@ replace_partition() {
     sed -i "s/<HPC_partition>/${HPC_partition}/g" "$1"
 }
 
+# Source variable script
+source config.parameters_all
+
 # Find all scripts in ${moduledir} that contain <HPC_partition> and replace it
 for script in "${moduledir}"/*.sh; do
     if grep -q "<HPC_partition>" "$script"; then
         replace_partition "$script"
     fi
 done
-
-# Source variable script
-source config.parameters_all
 
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
