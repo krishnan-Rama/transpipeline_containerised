@@ -23,7 +23,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 ### Concluding Note
 
-To successfully run this pipeline, ensure that scripts in the specified `${module}` directory and `config.parameters_all` are properly configured for your system. Refer to individual bash scripts and the configuration file for more detailed information or to modify specific behaviours of the pipeline.
+To successfully run this pipeline, ensure that SLURM parameters in the scripts in `${module}` directory are properly configured for your system. Refer to individual bash scripts and the configuration file for more detailed information or to modify specific behaviours of the pipeline.
 
 ### Author Information
 
