@@ -5,7 +5,7 @@
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
 #SBATCH --cpus-per-task=16      #
-#SBATCH --mem-per-cpu=5000   # in megabytes, unless unit explicitly stated
+#SBATCH --mem-per-cpu=30000   # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
 echo "================================="
@@ -50,7 +50,7 @@ export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 ############# SOURCE COMMANDS ##################################
 cat >${log}/orthofinder_${SLURM_JOB_ID}.sh <<EOF
 
-orthofinder -f ${OUTPUT_DIR}/genomes -M msa -T iqtree -a ${SLURM_CPUS_PER_TASK}
+orthofinder -f ${OUTPUT_DIR}/genomes -M msa -T iqtree -t ${SLURM_CPUS_PER_TASK}
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
