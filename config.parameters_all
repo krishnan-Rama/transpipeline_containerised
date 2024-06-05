@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Create Singularity cache directory in /tmp and set environment variables
+mkdir -p /tmp/$USER/singularity/cache
+export SINGULARITY_CACHEDIR=/tmp/$USER/singularity/cache
+export SINGULARITY_TMPDIR=/tmp/$USER/singularity/cache
+
 # Define core parameters - rawdata, pipedir, moduledir, assembly_name
 # sourcedir="/path/to/rawreads/"
 pipedir=$(pwd -P)
