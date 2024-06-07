@@ -98,6 +98,8 @@ isoform_counts=\$(ls "${rsemdir}/"*"/RSEM.isoforms.results")
 mv "${pipedir}/${assembly}_RSEM"* ${rsem}/
 mv "${pipedir}/edgeR_results ${rsem}/
 
+cp "${rsemdir}/*.matrix" "${outdir}/" 
+
 
 echo TOTAL_RAM=${TOTAL_RAM}
 echo CPU=${SLURM_CPUS_PER_TASK}

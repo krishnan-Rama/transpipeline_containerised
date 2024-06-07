@@ -58,6 +58,9 @@ cat >${log}/rcor_taxa_commands_${SLURM_JOB_ID}.sh <<EOF
 
 run_rcorrector.pl -1 ${krakendir}/${base}_1.fastq.gz -2 ${krakendir}/${base}_2.fastq.gz -od ${rcordir} -t ${SLURM_CPUS_PER_TASK}
 
+mkdir -p "${outdir}/preprocessed_reads"
+cp -r "${rcordir}/*.fq.gz" "${outdir}/preprocessed_reads"
+
 EOF
 ################ END OF SOURCE COMMANDS ######################
 
