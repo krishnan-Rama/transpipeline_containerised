@@ -17,6 +17,10 @@ for script in "${moduledir}"/*.sh; do
     fi
 done
 
+# Prompt the user for the species identifier name
+echo "Please enter the species identifier name (e.g., Hsap for humans):"
+read species_identifier
+
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
 # CORE PARAMETERS: sourcedir, rawdir

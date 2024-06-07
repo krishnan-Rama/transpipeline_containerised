@@ -71,8 +71,8 @@ mv "${assemblydir}.Trinity.fasta" "${assemblydir}/assembly.fasta"
 
 mv "${assemblydir}.Trinity.fasta.gene_trans_map" "${assemblydir}/assembly.gene_trans_map"
 
-#rename contigs by assembly
-sed -i "s/TRINITY_DN/assembly_contig_/g" "${assemblydir}/assembly.fasta"
+#rename contigs by assembly using species identifier
+sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/assembly.fasta"
 
 #create assembly stats
 #TrinityStats.pl on the Trinity.fasta output file
