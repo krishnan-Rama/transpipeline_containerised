@@ -24,7 +24,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 4. The prompt will ask you to enter your preferred HPC partition name to submit the job, simply type the name and return.
 
- Note: You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
+ **Note:** You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 
 - To generate PCR/heatmap plots for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
 
