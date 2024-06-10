@@ -1,0 +1,5 @@
+group   sample_name
+gut     Mb-ad-gut_S2_merge_trim
+Wb      Mb-ad-wb_S1_merge_trim
+Nc      Mb-al-n-cord_S3_merge_trim
+
