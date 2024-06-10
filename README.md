@@ -20,7 +20,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 2. Put the raw reads in `raw_data` folder.  
 
-3. Run the pipeline using `./deploy.sh`.  
+3. Run the pipeline using `./deploy.sh`  
 
 4. The prompt will ask you to enter your preferred HPC partition name to submit the job, simply type the name and return.
 
