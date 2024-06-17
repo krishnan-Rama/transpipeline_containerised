@@ -21,6 +21,8 @@ done
 echo "Please enter the species identifier name (e.g., Hsap for humans):"
 read species_identifier
 
+export SPECIES_IDENTIFIER
+
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
 # CORE PARAMETERS: sourcedir, rawdir
@@ -87,7 +89,7 @@ read species_identifier
 # WORK: assemblydir
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
-sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" --export=SPECIES_IDENTIFIER=${species_identifier} "${moduledir}/3-trinity_assembly.sh"
+sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
 # sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
 # sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
 # sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
