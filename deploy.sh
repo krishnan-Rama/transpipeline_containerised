@@ -62,7 +62,7 @@ export SPECIES_IDENTIFIER="$species_identifier"
 # PROCESS - FastQC trim data
 # qcfiles=${trimdir}
 # export qcfiles
-# sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
+ sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2B: Kraken2 on trimmed data (kraken.sh) + filtering contaminant reads (2B-kraken2.sh)
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
@@ -91,20 +91,6 @@ export SPECIES_IDENTIFIER="$species_identifier"
 # OUTPUT: assemby, assembly_gene_to_transcript
 # PROCESS - Assembly
 sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-trinity_assembly.sh"
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-masurca_assembly.sh"
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/3-flye_assembly.sh"
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/spades.sh"
-
-# Step 3A:Post de novo assembly polishing (Trinity, MaSuRCA & Flye)
-# Align raw read onto draft assembly for error correction (minimap2; .sam file)  
-# INPUT: Draft assembly (fasta) & raw reads
-#create polished assembly using racon by using .sam alignmnet info, then medaka. 
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/minimap2.sh"
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/racon.sh"
-# sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/medaka.sh"
-
-# step 3A: Check genome coverage using BWA and samtools
-# sbatch --error="${log}/assembly_%J.err" --output="${log}/assembly_%J.out" "${moduledir}/coverage.sh"
 
 # Step 4: evigene
 # -- Run evigene for gene annotation.
@@ -178,19 +164,3 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # PROCESS - Annotation extraction
  sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
 
-# Step 12: Extract orthologs and create a phylogeny tree
-# sbatch -d singleton --error="${log}/ortho_%J.err" --output="${log}/ortho_%J.out" "${moduledir}/orthofinder.sh"
-
-# step 13: create phylogenetic tree
-# sbatch --error="${log}/phylo_%J.err" --output="${log}/phylo_%J.out" "${moduledir}/ggtree.sh"
-
-# step 14: Molecular docking using autodock vina
-# sbatch --error="${log}/vina_%J.err" --output="${log}/vina_%J.out" "${moduledir}/vina.sh"
-
-# step 15: Blast on single copy BUSCO genes
-# sbatch --error="${log}/blast_%J.err" --output="${log}/blast_%J.out" "${moduledir}/blastp.sh"
-
-# BLOBTOOLS
-# sbatch -d singleton --error="${log}/blobtools_%J.err" --output="${log}/blobtools_%J.out" "${moduledir}/blobtools.sh"
-# sbatch -d singleton --error="${log}/blobviewer_%J.err" --output="${log}/blobviewer_%J.out" "${moduledir}/blobviewer.sh"
- 
