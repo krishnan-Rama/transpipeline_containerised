@@ -3,7 +3,7 @@
 #SBATCH --partition=<HPC_partition>       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=16      #   
+#SBATCH --cpus-per-task=4      #   
 #SBATCH --mem-per-cpu=30000     # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
@@ -43,7 +43,7 @@ WORKINGDIR=${pipedir}
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
 # Get list of all unique base names (without _1 or _2 suffix)
-bases=$(ls ${rawdir}/*_1.fastq.gz | xargs -n 1 basename | sed 's/_1.fastq.gz//' | sort | uniq)
+bases=$(ls ${rcordir}/*_1.cor.fq.gz | xargs -n 1 basename | sed 's/*_1.cor.fq.gz//' | sort | uniq)
 
 for base in $bases; do
     export base
@@ -53,8 +53,8 @@ for base in $bases; do
 
     echo "Starting FastQC analysis..."
 
-    fastqc "${rawdir}/${base}_1.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
-    fastqc "${rawdir}/${base}_2.fastq.gz" -o "${rawdir}" -t ${SLURM_CPUS_PER_TASK}
+    fastqc "${rcordir}/${base}_1.cor.fq.gz" -o "${rcordir}" -t ${SLURM_CPUS_PER_TASK}
+    fastqc "${rcordir}/${base}_2.cor.fq.gz" -o "${rcordir}" -t ${SLURM_CPUS_PER_TASK}
 EOF
     ################ END OF SOURCE COMMANDS ######################
 

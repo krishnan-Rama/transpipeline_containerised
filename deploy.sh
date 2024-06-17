@@ -42,7 +42,7 @@ export SPECIES_IDENTIFIER="$species_identifier"
 # PROCESS - FastQC raw data
 # qcfiles=${rawdir}
 # export qcfilesi
- sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1-fastqc_array.sh"
+ sbatch -d singleton --error="${log}/rawqc_%J.err" --output="${log}/rawqc_%J.out" "${moduledir}/1A-fastqc_array.sh"
 
 # Step 2A: Fastp trimming
 # -- Trim adapters and low-quality bases from raw data using Fastp.
@@ -52,17 +52,6 @@ export SPECIES_IDENTIFIER="$species_identifier"
 # OUTPUT: null
 # PROCESS - trim
  sbatch -d singleton --error="${log}/fastp_%J.err" --output="${log}/fastp_%J.out" "${moduledir}/2A-fastp_array.sh"  
-
-# Step 1B: FastQC on trimmed data
-# -- Run FastQC on trimmed data to assess data quality after trimming.
-# CORE PARAMETERS: modules, trimdir, qcdir, log
-# INPUT: trimdir
-# WORK: qcdir
-# OUTPUT: null
-# PROCESS - FastQC trim data
-# qcfiles=${trimdir}
-# export qcfiles
- sbatch -d singleton --error="${log}/trimqc_%J.err" --output="${log}/trimqc_%J.out" "${moduledir}/1-fastqc_array.sh"
 
 # Step 2B: Kraken2 on trimmed data (kraken.sh) + filtering contaminant reads (2B-kraken2.sh)
 # -- Run Kraken2 on trimmed data to further prune down after trimming.
@@ -82,6 +71,17 @@ export SPECIES_IDENTIFIER="$species_identifier"
 # OUTPUT: 
 # PROCESS - rcorrector trim data
  sbatch -d singleton --error="${log}/rcor_%J.err" --output="${log}/rcor__%J.out" "${moduledir}/2C-rcorrector.sh"
+
+# Step 1B: FastQC on pre-processed reads
+# -- Run FastQC on raw data to assess data quality before trimming.
+# CORE PARAMETERS: modules, rawdir, qcdir, log
+# INPUT: rawdir
+# WORK: qcdir
+# OUTPUT: null
+# PROCESS - FastQC raw data
+# qcfiles=${rawdir}
+# export qcfilesi
+ sbatch -d singleton --error="${log}/rawqc_2_%J.err" --output="${log}/rawqc_2_%J.out" "${moduledir}/1B-fastqc_array.sh"
 
 # Step 3A: assembly (Trinity, MaSuRCA, Flye & SPAdes)
 # -- Perform transcriptome assembly using: Trinity, MaSuRCA, Flye, or SPAdes
