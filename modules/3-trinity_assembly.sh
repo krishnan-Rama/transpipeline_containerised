@@ -67,21 +67,21 @@ Trinity --seqType fq \
 # rm ${krakendir}/all_2.fastq.gz
 
 #move assembly and gene trans map into assembly folder
-mv "${assemblydir}.Trinity.fasta" "${assemblydir}/assembly.fasta"
+mv "${assemblydir}.Trinity.fasta" "${assemblydir}/${assembly}.fasta"
 
-mv "${assemblydir}.Trinity.fasta.gene_trans_map" "${assemblydir}/assembly.gene_trans_map"
+mv "${assemblydir}.Trinity.fasta.gene_trans_map" "${assemblydir}/${assembly}.gene_trans_map"
 
 #rename contigs by assembly using species identifier
-sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/assembly.fasta"
+sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
 
 #create assembly stats
 #TrinityStats.pl on the Trinity.fasta output file
-/usr/local/bin/util/TrinityStats.pl "${assemblydir}/assembly.fasta" > "${assemblydir}/assembly_stats.txt"
+/usr/local/bin/util/TrinityStats.pl "${assemblydir}/${assembly}.fasta" > "${assemblydir}/${assembly}_stats.txt"
 
 #copy assembly results into output folder
-cp "${assemblydir}/assembly.fasta" "${outdir}/assembly.fasta"
-cp "${assemblydir}/assembly_stats.txt" "${outdir}/assembly_stats.txt"
-cp "${assemblydir}/assembly.gene_trans_map" "${outdir}/assembly_.gene_trans_map"
+cp "${assemblydir}/${assembly}.fasta" "${outdir}/${assembly}.fasta"
+cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/${assembly}_stats.txt"
+cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/${assembly}_.gene_trans_map"
 
 echo TOTAL_RAM=${TOTAL_RAM}
 echo CPU=${SLURM_CPUS_PER_TASK}

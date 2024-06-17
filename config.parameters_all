@@ -10,8 +10,8 @@ export SINGULARITY_TMPDIR=/tmp/$USER/singularity/cache
 pipedir=$(pwd -P)
 moduledir="${pipedir}/modules"
  
-current_date=$(date +%d%m%y)  
-assembly="assembly" 
+#current_date=$(date +%d%m%y)  
+#assembly="assembly" 
 
 ## Make workdir and output directories
 workdir="${pipedir}/workdir"

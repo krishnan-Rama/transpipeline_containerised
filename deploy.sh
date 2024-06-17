@@ -24,6 +24,9 @@ read species_identifier
 # Export the species identifier
 export SPECIES_IDENTIFIER="$species_identifier"
 
+assembly="${SPECIES_IDENTIFIER}"
+export assembly
+
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
 # CORE PARAMETERS: sourcedir, rawdir
