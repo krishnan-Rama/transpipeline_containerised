@@ -21,7 +21,8 @@ done
 echo "Please enter the species identifier name (e.g., Hsap for humans):"
 read species_identifier
 
-export SPECIES_IDENTIFIER
+# Export the species identifier
+export SPECIES_IDENTIFIER="$species_identifier"
 
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
