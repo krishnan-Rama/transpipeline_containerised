@@ -22,7 +22,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 3. Run the pipeline using `./deploy.sh`  
 
-4. The prompt will ask you to enter your preferred HPC partition name to submit the job, simply type the name and return.
+4. The prompt will ask you to enter your preferred HPC partition name to submit the job and the species identifier (e.g. Hsap for _Homo sapiens_), simply type the name and return.
 
  **Note:** You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 
