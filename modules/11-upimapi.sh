@@ -54,6 +54,9 @@ done
 
 #Entry&Pfam&Reactome&InterPro -cols "Entry Name&Gene Names&Organism&Protein names&Length&Geane Ontology (biological process)&Gene Ontology (cellular component)&Gene Ontology (GO)&Gene Ontology (molecular function)&Gene Ontology IDs&Pfam&InterPro&Reactome"
 
+mkdir -p "${outdir}/annotations"
+cp -r "${upimapi}" "${outdir}/annotations"
+
 EOF
 ################ END OF SOURCE COMMANDS ######################
 

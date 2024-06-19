@@ -63,7 +63,7 @@ blastp -query "${evigenedir}/okayset/${assembly}.okay.aa" \
        -out "${blastout}/${assembly}_${blastlib[${SLURM_ARRAY_TASK_ID}]}_blp.tsv"
 
 mkdir -p "${outdir}/blast_results"
-cp "${blastout}/*.tsv" "${outdir}/blast_results" 
+cp "${blastout}"/*.tsv "${outdir}/blast_results" 
 
 EOF
 ################ END OF SOURCE COMMANDS ######################

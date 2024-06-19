@@ -98,7 +98,7 @@ isoform_counts=\$(ls "${rsemdir}/"*"/RSEM.isoforms.results")
 mv "${pipedir}/${assembly}_RSEM"* ${rsem}/
 mv "${pipedir}/edgeR_results ${rsem}/
 
-cp "${rsemdir}/*.matrix" "${outdir}/" 
+cp "${rsemdir}"/*.matrix ${outdir}/ 
 
 
 echo TOTAL_RAM=${TOTAL_RAM}

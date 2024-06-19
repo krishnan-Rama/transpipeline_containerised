@@ -49,5 +49,7 @@ get_Trinity_gene_to_trans_map.pl "${assemblydir}/${assembly}_okay.fasta" > "${as
 cp "${assemblydir}/${assembly}_okay.fasta" "${outdir}/${assembly}_okay.fasta"
 cp "${assemblydir}/${assembly}_okay.gene_trans_map" "${outdir}/${assembly}_okay.gene_trans_map"
 cp "${assemblydir}/${assembly}_okay_stats.txt" "${outdir}/${assembly}_okay_stats.txt"
+cp "${evigenedir}/okayset/${assembly}.okay.aa" "${outdir}/${assembly}.okay.aa"
+cp "${evigenedir}/okayset/${assembly}.okay.cds" "${outdir}/${assembly}.okay.cds"
 
 module unload trinityrnaseq/Trinity-v2.6.6
