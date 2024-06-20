@@ -43,7 +43,7 @@ WORKINGDIR=${pipedir}
 export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
 # Get list of all unique base names (without _1 or _2 suffix)
-bases=$(ls ${rcordir}/*_1.cor.fq.gz | xargs -n 1 basename | sed 's/*_1.cor.fq.gz//' | sort | uniq)
+bases=$(ls ${rcordir}/*_1.cor.fq.gz | xargs -n 1 basename | sed 's/_1.cor.fq.gz//' | sort | uniq)
 
 for base in $bases; do
     export base
