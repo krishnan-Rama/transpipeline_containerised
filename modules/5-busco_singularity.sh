@@ -49,9 +49,19 @@ busco -i ${assemblydir}/${assembly}.fasta -m trans -o ${assembly} --out_path ${b
 
 busco -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
 
-cp ${buscodir}/${assembly}/*.txt ${outdir}/
+# Copy and rename files from raw assembly
+for file in ${buscodir}/${assembly}/*.txt; 
+do
+  newfile=$(basename "$file" | sed 's/short/busco/')
+  cp "$file" "${outdir}/raw_assembly/$newfile"
+done
 
-cp ${buscodir}/${assembly}_okay/*.txt ${outdir}/
+# Copy and rename files from nonredundant assembly
+for file in ${buscodir}/${assembly}_okay/*.txt; 
+do
+  newfile=$(basename "$file" | sed 's/short/busco/')
+  cp "$file" "${outdir}/nonredundant_assembly/$newfile"
+done
 
 echo CPU=${SLURM_CPUS_PER_TASK}
 

@@ -46,10 +46,11 @@ TrinityStats.pl "${assemblydir}/${assembly}_okay.fasta" > "${assemblydir}/${asse
 
 get_Trinity_gene_to_trans_map.pl "${assemblydir}/${assembly}_okay.fasta" > "${assemblydir}/${assembly}_okay.gene_trans_map"
 
-cp "${assemblydir}/${assembly}_okay.fasta" "${outdir}/${assembly}_okay.fasta"
-cp "${assemblydir}/${assembly}_okay.gene_trans_map" "${outdir}/${assembly}_okay.gene_trans_map"
-cp "${assemblydir}/${assembly}_okay_stats.txt" "${outdir}/${assembly}_okay_stats.txt"
-cp "${evigenedir}/okayset/${assembly}.okay.aa" "${outdir}/${assembly}.okay.aa"
-cp "${evigenedir}/okayset/${assembly}.okay.cds" "${outdir}/${assembly}.okay.cds"
+mkdir -p "${outdir}/nonredundant_assembly"
+cp "${assemblydir}/${assembly}_okay.fasta" "${outdir}/nonredundant_assembly/${assembly}_okay.fasta"
+cp "${assemblydir}/${assembly}_okay.gene_trans_map" "${outdir}/nonredundant_assembly/${assembly}_okay.gene_trans_map"
+cp "${assemblydir}/${assembly}_okay_stats.txt" "${outdir}/nonredundant_assembly/${assembly}_okay_stats.txt"
+cp "${evigenedir}/okayset/${assembly}.okay.aa" "${outdir}/nonredundant_assembly/${assembly}_okay.aa.fasta"
+cp "${evigenedir}/okayset/${assembly}.okay.cds" "${outdir}/nonredundant_assembly/${assembly}_okay.cds.fasta"
 
 module unload trinityrnaseq/Trinity-v2.6.6

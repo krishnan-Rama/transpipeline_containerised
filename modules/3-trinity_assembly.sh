@@ -78,10 +78,10 @@ sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta
 #TrinityStats.pl on the Trinity.fasta output file
 /usr/local/bin/util/TrinityStats.pl "${assemblydir}/${assembly}.fasta" > "${assemblydir}/${assembly}_stats.txt"
 
-#copy assembly results into output folder
-cp "${assemblydir}/${assembly}.fasta" "${outdir}/${assembly}.fasta"
-cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/${assembly}_stats.txt"
-cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/${assembly}.gene_trans_map"
+mkdir -p "${outdir}/raw_assembly"
+cp "${assemblydir}/${assembly}.fasta" "${outdir}/raw_assembly/${assembly}.fasta"
+cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/raw_assembly/${assembly}_stats.txt"
+cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/raw_assembly/${assembly}.gene_trans_map"
 
 echo TOTAL_RAM=${TOTAL_RAM}
 echo CPU=${SLURM_CPUS_PER_TASK}
