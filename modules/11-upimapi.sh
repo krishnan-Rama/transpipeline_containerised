@@ -48,7 +48,7 @@ for i in sprot Dmel Cele Mmus Scer Hsap; do
 
 mkdir ${upimapi}/\${i}/
 
-upimapi --blast -i "${blastout}/${assembly}_\${i}_blp.tsv" -t ${SLURM_CPUS_PER_TASK} -o ${upimapi}/\${i}/ -ot "${upimapi}/\${i}/${assembly}_\${i}_upimapi.tsv" --columns "Gene Names&InterPro&PANTHER"
+upimapi --blast -i "${blastout}/${assembly}_\${i}_blp.tsv" -t ${SLURM_CPUS_PER_TASK} -o ${upimapi}/\${i}/ -ot "${upimapi}/\${i}/${assembly}_\${i}_upimapi.tsv" --columns "Organism&Gene Names&InterPro&PANTHER"
 
 done
 
