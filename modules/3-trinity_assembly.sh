@@ -4,7 +4,7 @@
 #SBATCH --partition=<HPC_partition>       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=64      #   
+#SBATCH --cpus-per-task=32      #   
 #SBATCH --mem=300000     # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
