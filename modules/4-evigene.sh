@@ -3,7 +3,7 @@
 #SBATCH --partition=<HPC_partition>
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=128000
 
 echo "Some Usable Environment Variables:"
