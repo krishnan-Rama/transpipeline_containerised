@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=<pipeline>
-#SBATCH --partition=<HPC_partition>
-#SBATCH --nodes=1
-#SBATCH --ntasks=16
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=128000
+#SBATCH --partition=<HPC_partition>     
+#SBATCH --nodes=1              
+#SBATCH --tasks-per-node=1     
+#SBATCH --cpus-per-task=16      
+#SBATCH --mem=32G     
 
 echo "Some Usable Environment Variables:"
 echo "================================="
