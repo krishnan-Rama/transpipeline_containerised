@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=pipeline
+#SBATCH --job-name=<pipeline>
 #SBATCH --partition=<HPC_partition> # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #

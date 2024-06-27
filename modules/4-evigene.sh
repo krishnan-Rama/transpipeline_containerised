@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=pipeline
+#SBATCH --job-name=<pipeline>
 #SBATCH --partition=<HPC_partition>
 #SBATCH --nodes=1
 #SBATCH --ntasks=16

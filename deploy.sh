@@ -1,14 +1,14 @@
 #!/bin/bash
 
+# Source config script
+source config.parameters_all
+
 read -p "Enter your preferred HPC partition name: " HPC_partition
 
 # Function to replace <HPC_partition> in a given file
 replace_partition() {
     sed -i "s/<HPC_partition>/${HPC_partition}/g" "$1"
 }
-
-# Source variable script
-source config.parameters_all
 
 # Find all scripts in ${moduledir} that contain <HPC_partition> and replace it
 for script in "${moduledir}"/*.sh; do
@@ -18,8 +18,20 @@ for script in "${moduledir}"/*.sh; do
 done
 
 # Prompt the user for the species identifier name
-echo "Please enter the species identifier name (e.g., Hsap for humans):"
+echo "Please enter the species identifier name (e.g., Hsap_120624, Hsap for humans):"
 read species_identifier
+
+# Function to replace <pipeline> in a given file
+replace_pipeline() {
+    sed -i "s/<pipeline>/${species_identifier}/g" $1
+}
+
+# Find all scripts in ${moduledir} that contain <HPC_partition> and replace it
+for script in "${moduledir}"/*.sh; do
+    if grep -q "<pipeline>" "$script"; then
+        replace_pipeline "$script"
+    fi
+done
 
 # Export the species identifier
 export SPECIES_IDENTIFIER="$species_identifier"
