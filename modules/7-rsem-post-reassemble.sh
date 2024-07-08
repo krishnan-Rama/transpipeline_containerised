@@ -1,10 +1,10 @@
 #!/bin/bash
 #SBATCH --job-name=<pipeline>
-#SBATCH --partition=<HPC_partition> # the requested queue
-#SBATCH --nodes=1              # number of nodes to use
-#SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=4      #
-#SBATCH --mem=2G     # in megabytes, unless unit explicitly stated
+#SBATCH --partition=<HPC_partition>
+#SBATCH --nodes=1          
+#SBATCH --tasks-per-node=1    
+#SBATCH --cpus-per-task=4     
+#SBATCH --mem=2G 
 
 echo "Some Usable Environment Variables:"
 echo "================================="
@@ -91,7 +91,7 @@ isoform_counts=\$(ls "${rsemdir}/"*"/RSEM.isoforms.results")
 
 \$TRINITY_HOME/Analysis/DifferentialExpression/PtR --matrix "${rsemdir}/${assembly}_RSEM.gene.counts.matrix" -s "${metadata}" --log2 --prin_comp 3
 
-\$TRINITY_HOME/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix "${rsemdir}/${assembly}_RSEM.gene.counts.matrix" --samples_file "${metadata}" --method edgeR --output edgeR_results
+\$TRINITY_HOME/Analysis/DifferentialExpression/run_DE_analysis.pl --matrix "${rsemdir}/${assembly}_RSEM.gene.counts.matrix" --samples_file "${metadata}" --method edgeR --dispersion 0.1 --output edgeR_results
 
 \$TRINITY_HOME/Analysis/DifferentialExpression/analyze_diff_expr.pl --matrix "${rsemdir}/${assembly}_RSEM.gene.counts.matrix" -P 1e-3 -C 1.4 --samples "${metadata}"
 
