@@ -3,6 +3,7 @@
 # Source config script
 source config.parameters_all
 
+# Prompt the user for the HPC partition name
 read -p "Enter your preferred HPC partition name: " HPC_partition
 
 # Function to replace <HPC_partition> in a given file
@@ -18,15 +19,14 @@ for script in "${moduledir}"/*.sh; do
 done
 
 # Prompt the user for the species identifier name
-echo "Please enter the species identifier name (e.g., Hsap_120624, Hsap for humans):"
-read species_identifier
+read -p "Please enter the species identifier name (e.g., Hsap_120624, Hsap for humans): " species_identifier
 
 # Function to replace <pipeline> in a given file
 replace_pipeline() {
-    sed -i "s/<pipeline>/${species_identifier}/g" $1
+    sed -i "s/<pipeline>/${species_identifier}/g" "$1"
 }
 
-# Find all scripts in ${moduledir} that contain <HPC_partition> and replace it
+# Find all scripts in ${moduledir} that contain <pipeline> and replace it
 for script in "${moduledir}"/*.sh; do
     if grep -q "<pipeline>" "$script"; then
         replace_pipeline "$script"
@@ -38,6 +38,7 @@ export SPECIES_IDENTIFIER="$species_identifier"
 
 assembly="${SPECIES_IDENTIFIER}"
 export assembly
+
 
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
