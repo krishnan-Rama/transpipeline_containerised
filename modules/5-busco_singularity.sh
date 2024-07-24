@@ -52,14 +52,14 @@ busco -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --ou
 # Copy and rename files from raw assembly
 for file in ${buscodir}/${assembly}/*.txt; 
 do
-  newfile=$(basename "$file" | sed 's/short/busco/')
+  newfile=$(basename "$file" | sed 's/short_summary\.generic\./busco_summary_/')
   cp "$file" "${outdir}/raw_assembly/$newfile"
 done
 
 # Copy and rename files from nonredundant assembly
 for file in ${buscodir}/${assembly}_okay/*.txt; 
 do
-  newfile=$(basename "$file" | sed 's/short/busco/')
+  newfile=$(basename "$file" | sed 's/short_summary\.generic\./busco_summary_/')
   cp "$file" "${outdir}/nonredundant_assembly/$newfile"
 done
 
