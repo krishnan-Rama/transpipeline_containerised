@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#SBATCH --job-name=pipeline
+#SBATCH --job-name=Orthofinder
 #SBATCH --partition=epyc       # the requested queue
 #SBATCH --nodes=1              # number of nodes to use
 #SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=64      #
+#SBATCH --cpus-per-task=16      #
 #SBATCH --mem-per-cpu=5000   # in megabytes, unless unit explicitly stated
 
 echo "Some Usable Environment Variables:"
@@ -19,17 +19,6 @@ echo \$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}
 
 # Write jobscript to output file (good for reproducibility)
 cat $0
-
-# load modules
-#module load python/3.10.5
-
-#cd ${moduledir}/OrthoFinder_source
-
-#python orthofinder.py -f ExampleData_2
-
-#mkdir -p  ${workdir}/Orthologtree
-
-#module unload python/3.10.5
 
 # load singularity module
 module load singularity/3.8.7
@@ -61,7 +50,7 @@ export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 ############# SOURCE COMMANDS ##################################
 cat >${log}/orthofinder_${SLURM_JOB_ID}.sh <<EOF
 
-orthofinder -f ${moduledir}/OrthoFinder_source/ExampleData_2 -M msa -T iqtree
+orthofinder -f ${moduledir}/OrthoFinder_source/ExampleData_2 -t ${SLURM_CPUS_PER_TASK}
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
