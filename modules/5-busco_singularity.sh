@@ -49,21 +49,30 @@ busco -i ${assemblydir}/${assembly}.fasta -m trans -o ${assembly} --out_path ${b
 
 busco -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
 
+# Print the directory contents for debugging
+echo "Contents of ${buscodir}/${assembly}:"
+ls -l ${buscodir}/${assembly}
+
+echo "Contents of ${buscodir}/${assembly}_okay:"
+ls -l ${buscodir}/${assembly}_okay
+
 # Copy and rename files from raw assembly
 for file in ${buscodir}/${assembly}/*.txt; 
 do
-  newfile=$(basename "$file" | sed 's/short_summary\.generic\./busco_summary_/')
-  cp "$file" "${outdir}/raw_assembly/$newfile"
+  newfile=\$(basename "\$file" | sed 's/short_summary\\.generic\\./busco_summary_/')
+  echo "Copying \$file to ${outdir}/raw_assembly/\$newfile"
+  cp "\$file" "${outdir}/raw_assembly/\$newfile"
 done
 
 # Copy and rename files from nonredundant assembly
 for file in ${buscodir}/${assembly}_okay/*.txt; 
 do
-  newfile=$(basename "$file" | sed 's/short_summary\.generic\./busco_summary_/')
-  cp "$file" "${outdir}/nonredundant_assembly/$newfile"
+  newfile=\$(basename "\$file" | sed 's/short_summary\\.generic\\./busco_summary_/')
+  echo "Copying \$file to ${outdir}/nonredundant_assembly/\$newfile"
+  cp "\$file" "${outdir}/nonredundant_assembly/\$newfile"
 done
 
-echo CPU=${SLURM_CPUS_PER_TASK}
+echo CPU=\${SLURM_CPUS_PER_TASK}
 
 EOF
 ################ END OF SOURCE COMMANDS ######################
