@@ -50,8 +50,8 @@ busco -i ${assemblydir}/${assembly}.fasta -m trans -o ${assembly} --out_path ${b
 busco -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
 
 
-cp ${buscodir}/${assembly}/*.txt ${outdir}/raw_assembly
-cp ${buscodir}/${assembly}_okay/*.txt ${outdir}/nonredundant_assembly
+cp "${buscodir}/${assembly}"/*.txt "${outdir}/raw_assembly"
+cp "${buscodir}/${assembly}_okay/"*.txt "${outdir}/nonredundant_assembly"
 
 echo CPU=\${SLURM_CPUS_PER_TASK}
 
