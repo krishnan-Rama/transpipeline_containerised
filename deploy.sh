@@ -19,7 +19,7 @@ for script in "${moduledir}"/*.sh; do
 done
 
 # Prompt the user for the species identifier name
-read -p "Please enter the species identifier name (e.g., Hsap_120624, Hsap for humans): " species_identifier
+read -p "Please enter the species/project identifier name (e.g., Hsap_120624, Hsap for humans): " species_identifier
 
 # Function to replace <pipeline> in a given file
 replace_pipeline() {
