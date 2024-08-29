@@ -38,9 +38,6 @@ echo ${singularities}
 SINGIMAGEDIR=${pipedir}/singularities
 SINGIMAGENAME=${IMAGE_NAME}
 
-# Trinity requires max memory in GB not MB, script to convert mem to GB
-TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
-
 # Set working directory
 WORKINGDIR=${pipedir}
 
