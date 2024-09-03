@@ -20,3 +20,4 @@ rm contamination_ids1.txt contamination_ids2.txt keep_ids.txt
 # rm all_contamination_ids.txt
 
 echo "Pipeline complete. Filtered FASTA file: Apisum_220724_filtered.fasta"
+
