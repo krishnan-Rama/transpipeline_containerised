@@ -163,9 +163,3 @@ if [[ ! -d "${mergedir}" ]]; then
 fi
 export mergedir
 
-#Step 13: run another round of blast on single copy BUSCO
-busco_blast="${workdir}/busco_blast"
-if [[ ! -d "${busco_blast}" ]]; then
-        mkdir -p "${busco_blast}"
-fi
-export busco_blast

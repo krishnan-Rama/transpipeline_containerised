@@ -172,11 +172,13 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
  sbatch -d singleton --error="${log}/blastp_%J.err" --output="${log}/blastp_%J.out" --array="0-5" "${moduledir}/10-blast.sh"
 
 # Step 11: Extract annotation from Uniprot
-# comments
 # CORE PARAMETERS: modules, blastout, unimapi
 # INPUT: blastout 
 # WORK: unimapi
 # OUTPUT:
 # PROCESS - Annotation extraction
  sbatch -d singleton --error="${log}/upimapi_%J.err" --output="${log}/upimapi_%J.out" "${moduledir}/11-upimapi.sh"
+
+# Step 12: Merge annotations with gene id, transcript id and blast results
+ sbatch -d singleton --error="${log}/merge_%J.err" --output="${log}/merge_%J.out" "${moduledir}/12-datamerge.sh"
 
