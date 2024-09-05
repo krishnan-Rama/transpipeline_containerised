@@ -157,7 +157,7 @@ fi
 export upimapi
 
 #Step 12: Prepare upimapi results and compile them innto a database
-mergedir="${workdir}/mergedir/merge_cu"
+mergedir="${workdir}/mergedir"
 if [[ ! -d "${mergedir}" ]]; then
         mkdir -p "${mergedir}"
 fi
