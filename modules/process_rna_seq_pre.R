@@ -21,11 +21,9 @@ mergedir <- args[3]
 
 # Set file paths dynamically based on variables
 gene_trans_map_file <- paste0(workdir, "/outdir/nonredundant_assembly/", assembly, "_okay.gene_trans_map")
-isoform_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.isoform.counts.matrix")
-gene_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.gene.counts.matrix")
 
 # Function to process blp and upimapi files
-process_files <- function(blp_file, upimapi_file, gene_trans_map_file, species_name, isoform_matrix_file, gene_matrix_file) {
+process_files <- function(blp_file, upimapi_file, gene_trans_map_file, species_name) {
   # Read the gene-transcript map
   gene_trans_map <- read.table(gene_trans_map_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
   colnames(gene_trans_map) <- c("GeneID", "TranscriptID")
@@ -51,46 +49,28 @@ process_files <- function(blp_file, upimapi_file, gene_trans_map_file, species_n
     inner_join(merged_data, by = "TranscriptID") %>%
     mutate(Species = species_name)
   
-  # Read and integrate the isoform matrix file
-  isoform_matrix <- read.table(isoform_matrix_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
-  colnames(isoform_matrix) <- c("TranscriptID", "Isoform_Count")
-  
-  # Read and integrate the gene matrix file
-  gene_matrix <- read.table(gene_matrix_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
-  colnames(gene_matrix) <- c("GeneID", "Gene_Count")
-  
-  # Join isoform matrix data to final data by TranscriptID, placing Isoform_Count next to TranscriptID
-  final_data <- final_data %>%
-    left_join(isoform_matrix, by = "TranscriptID") %>%
-    select(GeneID, TranscriptID, Isoform_Count, everything())
-  
-  # Join gene matrix data to final data by GeneID, placing Gene_Count next to GeneID
-  final_data <- final_data %>%
-    left_join(gene_matrix, by = "GeneID") %>%
-    select(GeneID, Gene_Count, TranscriptID, everything())
-  
   return(final_data)
 }
 
 # Process each pair of blp and upimapi files, dynamically building paths from the variables
 hsap_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Hsap_blp.tsv"), 
                            paste0(workdir, "/outdir/annotations/upimapi/Hsap/", assembly, "_Hsap_upimapi.tsv"), 
-                           gene_trans_map_file, "Hsap", isoform_matrix_file, gene_matrix_file)
+                           gene_trans_map_file, "Hsap")
 mmus_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Mmus_blp.tsv"), 
                            paste0(workdir, "/outdir/annotations/upimapi/Mmus/", assembly, "_Mmus_upimapi.tsv"), 
-                           gene_trans_map_file, "Mmus", isoform_matrix_file, gene_matrix_file)
+                           gene_trans_map_file, "Mmus")
 cele_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Cele_blp.tsv"), 
                            paste0(workdir, "/outdir/annotations/upimapi/Cele/", assembly, "_Cele_upimapi.tsv"), 
-                           gene_trans_map_file, "Cele", isoform_matrix_file, gene_matrix_file)
+                           gene_trans_map_file, "Cele")
 dmel_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Dmel_blp.tsv"), 
                            paste0(workdir, "/outdir/annotations/upimapi/Dmel/", assembly, "_Dmel_upimapi.tsv"), 
-                           gene_trans_map_file, "Dmel", isoform_matrix_file, gene_matrix_file)
+                           gene_trans_map_file, "Dmel")
 scer_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Scer_blp.tsv"), 
                            paste0(workdir, "/outdir/annotations/upimapi/Scer/", assembly, "_Scer_upimapi.tsv"), 
-                           gene_trans_map_file, "Scer", isoform_matrix_file, gene_matrix_file)
+                           gene_trans_map_file, "Scer")
 sprot_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_sprot_blp.tsv"), 
                             paste0(workdir, "/outdir/annotations/upimapi/sprot/", assembly, "_sprot_upimapi.tsv"), 
-                            gene_trans_map_file, "sprot", isoform_matrix_file, gene_matrix_file)
+                            gene_trans_map_file, "sprot")
 
 # Combine all data into one data frame
 combined_data <- bind_rows(hsap_data, mmus_data, cele_data, dmel_data, scer_data, sprot_data)
