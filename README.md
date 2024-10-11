@@ -1,6 +1,8 @@
 # transpipeline
 A SLURM pipeline designed for comprehensive transcriptome analysis including quality assessment, pre-processing, _de novo_ assembly, and functional annotation. This pipeline is specifically optimized for deployment on high-performance computing (HPC) clusters and executed _via_ Slurm Workload Manager.
 
+The **NextFlow version** of this pipeline is available at `https://github.com/krishnan-Rama/transFlow.
+
 ## Key Features
 
 - **Transcriptome Quality Assessment**: Ensures high-quality data processing with integrated quality checks.
@@ -29,7 +31,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 - You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 - All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
 - To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
-- The **NextFlow version** of this pipeline is available at `https://github.com/krishnan-Rama/transFlow`.
+  
 ### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
 
