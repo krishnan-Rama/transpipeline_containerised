@@ -22,7 +22,8 @@ cat $0
 
 # Load necessary modules and activate virtual environment
 cd ${moduledir}
-#python -m venv python_kraken2
+
+python -m venv kraken_bio
 source kraken_bio/bin/activate
 pip install biopython
 
