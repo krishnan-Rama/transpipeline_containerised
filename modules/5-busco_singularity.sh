@@ -45,9 +45,9 @@ export BINDS="${BINDS},${WORKINGFOLDER}:${WORKINGFOLDER}"
 ############# SOURCE COMMANDS ##################################
 cat >${log}/busco_source_commands_${SLURM_JOB_ID}.sh <<EOF
 
-busco -i ${assemblydir}/${assembly}.fasta -m trans -o ${assembly} --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
+busco -f -i ${assemblydir}/${assembly}.fasta -m trans -o ${assembly} --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
 
-busco -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
+busco -f -i ${assemblydir}/${assembly}_okay.fasta -m trans -o ${assembly}_okay --out_path ${buscodir} --auto-lineage-euk -c ${SLURM_CPUS_PER_TASK}
 
 
 cp "${buscodir}/${assembly}"/*.txt "${outdir}/raw_assembly"
