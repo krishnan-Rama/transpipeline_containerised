@@ -23,19 +23,19 @@ cat $0
 # load singularity module
 module load singularity/3.8.7
 
-IMAGE_NAME=trinity%3A2.15.1--hff880f7_1
+IMAGE_NAME=trinityrnaseq/trinityrnaseq:latest
+SINGULARITY_IMAGE_NAME=trinityrnaseq:latest
 
-if [ -f ${pipedir}/singularities/${IMAGE_NAME} ]; then
+if [ -f ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} ]; then
     echo "Singularity image exists"
- else
+else
     echo "Singularity image does not exist"
-    wget -O ${pipedir}/singularities/${IMAGE_NAME} https://depot.galaxyproject.org/singularity/$IMAGE_NAME
+    singularity pull ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} docker://$IMAGE_NAME
 fi
 
-echo ${singularities}
-
+# set singularity image
 SINGIMAGEDIR=${pipedir}/singularities
-SINGIMAGENAME=${IMAGE_NAME}
+SINGIMAGENAME=${SINGULARITY_IMAGE_NAME}
 
 # Trinity requires max memory in GB not MB, script to convert mem to GB
 TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
