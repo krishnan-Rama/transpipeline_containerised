@@ -22,8 +22,8 @@ cat $0
 # load singularity module
 module load singularity/3.8.7
 
-IMAGE_NAME=trinityrnaseq/trinityrnaseq:2.15.1
-SINGULARITY_IMAGE_NAME=trinityrnaseq_2.15.1.sif
+IMAGE_NAME=trinityrnaseq/trinityrnaseq:latest
+SINGULARITY_IMAGE_NAME=trinityrnaseq:latest
 
 if [ -f ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} ]; then
     echo "Singularity image exists"
