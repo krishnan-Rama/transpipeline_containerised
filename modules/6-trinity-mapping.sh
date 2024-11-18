@@ -74,4 +74,4 @@ cp ${assemblydir}/${assembly}_okay.gene_trans_map ${assemblydir}/\${base}/${asse
 EOF
 ################ END OF SOURCE COMMANDS ######################
 #rm -r ${assemblydir}/\${base}/
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/t
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/trinity_mapping_commands_${SLURM_JOB_ID}.sh
