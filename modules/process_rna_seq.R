@@ -5,13 +5,17 @@ dir.create(temp_lib)
 # Set the temporary directory as the default library path
 .libPaths(temp_lib)
 
-# Install the 'dplyr' package if it is not already installed
+# Install the required packages if not already installed
 if (!require("dplyr")) {
     install.packages("dplyr", repos = "http://cran.us.r-project.org", lib = temp_lib)
 }
+if (!require("tidyr")) {
+    install.packages("tidyr", repos = "http://cran.us.r-project.org", lib = temp_lib)
+}
 
-# Load the 'dplyr' package
+# Load the packages
 library(dplyr)
+library(tidyr)
 
 # Command line arguments
 args <- commandArgs(trailingOnly = TRUE)
@@ -52,48 +56,36 @@ process_files <- function(blp_file, upimapi_file, gene_trans_map_file, species_n
     mutate(Species = species_name)
   
   # Read and integrate the isoform matrix file
-  isoform_matrix <- read.table(isoform_matrix_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
-  colnames(isoform_matrix) <- c("TranscriptID", "Isoform_Count")
+  isoform_matrix <- read.table(isoform_matrix_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+  colnames(isoform_matrix)[1] <- "TranscriptID"  # Ensure the first column is named TranscriptID
+  
+  isoform_matrix <- isoform_matrix %>%
+    pivot_longer(cols = -TranscriptID, names_to = "Tissue", values_to = "Isoform_Count")
   
   # Read and integrate the gene matrix file
-  gene_matrix <- read.table(gene_matrix_file, header = FALSE, sep = "\t", stringsAsFactors = FALSE)
-  colnames(gene_matrix) <- c("GeneID", "Gene_Count")
+  gene_matrix <- read.table(gene_matrix_file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
+  colnames(gene_matrix)[1] <- "GeneID"  # Ensure the first column is named GeneID
   
-  # Join isoform matrix data to final data by TranscriptID, placing Isoform_Count next to TranscriptID
+  gene_matrix <- gene_matrix %>%
+    pivot_longer(cols = -GeneID, names_to = "Tissue", values_to = "Gene_Count")
+  
+  # Join isoform matrix data to final data by TranscriptID, including tissue data
   final_data <- final_data %>%
     left_join(isoform_matrix, by = "TranscriptID") %>%
-    select(GeneID, TranscriptID, Isoform_Count, everything())
-  
-  # Join gene matrix data to final data by GeneID, placing Gene_Count next to GeneID
-  final_data <- final_data %>%
-    left_join(gene_matrix, by = "GeneID") %>%
-    select(GeneID, Gene_Count, TranscriptID, everything())
+    left_join(gene_matrix, by = c("GeneID", "Tissue"))
   
   return(final_data)
 }
 
-# Process each pair of blp and upimapi files, dynamically building paths from the variables
-hsap_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Hsap_blp.tsv"), 
-                           paste0(workdir, "/outdir/annotations/upimapi/Hsap/", assembly, "_Hsap_upimapi.tsv"), 
-                           gene_trans_map_file, "Hsap", isoform_matrix_file, gene_matrix_file)
-mmus_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Mmus_blp.tsv"), 
-                           paste0(workdir, "/outdir/annotations/upimapi/Mmus/", assembly, "_Mmus_upimapi.tsv"), 
-                           gene_trans_map_file, "Mmus", isoform_matrix_file, gene_matrix_file)
-cele_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Cele_blp.tsv"), 
-                           paste0(workdir, "/outdir/annotations/upimapi/Cele/", assembly, "_Cele_upimapi.tsv"), 
-                           gene_trans_map_file, "Cele", isoform_matrix_file, gene_matrix_file)
-dmel_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Dmel_blp.tsv"), 
-                           paste0(workdir, "/outdir/annotations/upimapi/Dmel/", assembly, "_Dmel_upimapi.tsv"), 
-                           gene_trans_map_file, "Dmel", isoform_matrix_file, gene_matrix_file)
-scer_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_Scer_blp.tsv"), 
-                           paste0(workdir, "/outdir/annotations/upimapi/Scer/", assembly, "_Scer_upimapi.tsv"), 
-                           gene_trans_map_file, "Scer", isoform_matrix_file, gene_matrix_file)
-sprot_data <- process_files(paste0(workdir, "/outdir/blast_results/", assembly, "_sprot_blp.tsv"), 
-                            paste0(workdir, "/outdir/annotations/upimapi/sprot/", assembly, "_sprot_upimapi.tsv"), 
-                            gene_trans_map_file, "sprot", isoform_matrix_file, gene_matrix_file)
-
-# Combine all data into one data frame
-combined_data <- bind_rows(hsap_data, mmus_data, cele_data, dmel_data, scer_data, sprot_data)
+# Process each pair of blp and upimapi files
+species_list <- c("Hsap", "Mmus", "Cele", "Dmel", "Scer", "sprot")
+combined_data <- bind_rows(lapply(species_list, function(species) {
+  process_files(
+    paste0(workdir, "/outdir/blast_results/", assembly, "_", species, "_blp.tsv"),
+    paste0(workdir, "/outdir/annotations/upimapi/", species, "/", assembly, "_", species, "_upimapi.tsv"),
+    gene_trans_map_file, species, isoform_matrix_file, gene_matrix_file
+  )
+}))
 
 # Save the combined data to a single CSV file in the merged data directory
 output_file <- paste0(mergedir, "/", assembly, "_combined_final.csv")
@@ -101,4 +93,3 @@ write.csv(combined_data, output_file, row.names = FALSE)
 
 # Print a message
 print("All data processed and saved into one CSV file successfully.")
-
