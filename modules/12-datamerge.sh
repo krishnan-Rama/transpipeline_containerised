@@ -29,4 +29,4 @@ mkdir -p ${merged_outdir}
 
 Rscript ${moduledir}/process_rna_seq.R ${workdir} ${assembly} ${mergedir}
 
-cp ${mergedir}/${assembly}_combined_final.csv ${merged_outdir}/${assembly}_combined_data.csv
+cp ${mergedir}/${assembly}_combined_final.csv ${merged_outdir}
