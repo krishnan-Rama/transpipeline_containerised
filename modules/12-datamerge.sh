@@ -23,7 +23,7 @@ module load R/4.3.1
 
 workdir=${pipedir}
 
-merged_outdir=${workdir}/outdir/merged_data
+merged_outdir=${outdir}/merged_data
 
 mkdir -p ${merged_outdir}
 
