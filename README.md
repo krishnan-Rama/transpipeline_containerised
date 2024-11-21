@@ -26,11 +26,58 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 4. The prompt will ask you to enter your preferred HPC partition name to submit the job and the species/project identifier (e.g. Hsap or Hsap_200524 for _Homo sapiens_), simply type the name and return.
 
+## Differential gene expression analysis and visualisation
+To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
+
+## Database query `query_gene_data.py` (All results compiled)
+The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
+
+The program **`query_gene_data.py`** can be used to query data. Simply execute below code to display querying arguments available:
+```
+python query_gene_data.py --db ../workdir/mergedir/final_data.db --help
+```
+Available displayed arguments:
+
+usage: query_gene_data.py [-h] [--csv CSV] [--db DB] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
+                          [--gene.names GENE.NAMES] [--panther PANTHER] [--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.] [--tissue TISSUE] [--isoform_count ISOFORM_COUNT]
+                          [--gene_count GENE_COUNT]
+
+Query the gene data database or create it from a CSV file.
+
+options:
+  -h, --help            show this help message and exit
+  --csv CSV             Path to the CSV file to create the database (if the database doesn't exist).
+  --db DB               Path to the SQLite database file (default: final_data.db).
+  --species SPECIES     Filter by species (e.g., Hsap, Mmus, Dmel, Cele, Scer, sprot, or all)
+  --geneid GENEID       Filter by GeneID
+  --transcriptid TRANSCRIPTID
+                        Filter by TranscriptID
+  --entry ENTRY         Filter by Entry
+  --e_value E_VALUE     Filter by E_value
+  --interpro INTERPRO   Filter by InterPro
+  --entry.name ENTRY.NAME
+                        Filter by Entry.Name
+  --gene.names GENE.NAMES
+                        Filter by Gene.Names
+  --panther PANTHER     Filter by PANTHER
+  --taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.
+                        Filter by Taxonomic.lineage..SPECIES.
+  --tissue TISSUE       Filter by Tissue
+  --isoform_count ISOFORM_COUNT
+                        Filter by Isoform_Count
+  --gene_count GENE_COUNT
+                        Filter by Gene_Count
+
+
+## Final results spreadsheet (Results in a .csv file)
+The gene id, transcript id, blast and annotations with expression data compiled into a spreadsheet is also available in the locations:
+`transpipeline_containerised/workdir/mergedir/*_combined_final.csv` or `transpipeline_containerised/outdir/merged_data/*_combined_final.csv`
+
+
  **Note:** 
 - You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
 - You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 - All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
-- To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
   
 ### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
