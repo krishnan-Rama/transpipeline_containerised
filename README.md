@@ -26,6 +26,11 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 4. The prompt will ask you to enter your preferred HPC partition name to submit the job and the species/project identifier (e.g. Hsap or Hsap_200524 for _Homo sapiens_), simply type the name and return.
 
+ **Note:** 
+- You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
+- You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
+- All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
+
 ## Differential gene expression analysis and visualisation
 To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
 
@@ -68,11 +73,6 @@ python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [
 The gene id, transcript id, blast and annotations with expression data compiled into a spreadsheet is also available in the locations:
 `transpipeline_containerised/workdir/mergedir/*_combined_final.csv` or `transpipeline_containerised/outdir/merged_data/*_combined_final.csv`
 
-
- **Note:** 
-- You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
-- You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
-- All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
   
 ### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
