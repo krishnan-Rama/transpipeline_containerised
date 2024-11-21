@@ -42,31 +42,25 @@ usage: query_gene_data.py [-h] [--csv CSV] [--db DB] [--species SPECIES] [--gene
                           [--gene.names GENE.NAMES] [--panther PANTHER] [--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.] [--tissue TISSUE] [--isoform_count ISOFORM_COUNT]
                           [--gene_count GENE_COUNT]
 
-Query the gene data database or create it from a CSV file.
 
-options:
-  -h, --help            show this help message and exit
-  --csv CSV             Path to the CSV file to create the database (if the database doesn't exist).
-  --db DB               Path to the SQLite database file (default: final_data.db).
-  --species SPECIES     Filter by species (e.g., Hsap, Mmus, Dmel, Cele, Scer, sprot, or all)
-  --geneid GENEID       Filter by GeneID
-  --transcriptid TRANSCRIPTID
-                        Filter by TranscriptID
-  --entry ENTRY         Filter by Entry
-  --e_value E_VALUE     Filter by E_value
-  --interpro INTERPRO   Filter by InterPro
-  --entry.name ENTRY.NAME
-                        Filter by Entry.Name
-  --gene.names GENE.NAMES
-                        Filter by Gene.Names
-  --panther PANTHER     Filter by PANTHER
-  --taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.
-                        Filter by Taxonomic.lineage..SPECIES.
-  --tissue TISSUE       Filter by Tissue
-  --isoform_count ISOFORM_COUNT
-                        Filter by Isoform_Count
-  --gene_count GENE_COUNT
-                        Filter by Gene_Count
+| **Argument**                | **Description**                                                                                     |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|
+| `-h, --help`                | Show the help message and exit.                                                                    |
+| `--csv CSV`                 | Path to the CSV file to create the database (if the database doesn't exist).                        |
+| `--db DB`                   | Path to the SQLite database file (default: `final_data.db`).                                        |
+| `--species SPECIES`         | Filter by species (e.g., `Hsap`, `Mmus`, `Dmel`, `Cele`, `Scer`, `sprot`, or `all`).               |
+| `--geneid GENEID`           | Filter by `GeneID`.                                                                                |
+| `--transcriptid TRANSCRIPTID` | Filter by `TranscriptID`.                                                                         |
+| `--entry ENTRY`             | Filter by `Entry`.                                                                                 |
+| `--e_value E_VALUE`         | Filter by `E_value`.                                                                               |
+| `--interpro INTERPRO`       | Filter by `InterPro`.                                                                              |
+| `--entry.name ENTRY.NAME`   | Filter by `Entry.Name`.                                                                            |
+| `--gene.names GENE.NAMES`   | Filter by `Gene.Names`.                                                                            |
+| `--panther PANTHER`         | Filter by `PANTHER`.                                                                               |
+| `--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.` | Filter by `Taxonomic.lineage..SPECIES.`                                                       |
+| `--tissue TISSUE`           | Filter by `Tissue`.                                                                                |
+| `--isoform_count ISOFORM_COUNT` | Filter by `Isoform_Count`.                                                                     |
+| `--gene_count GENE_COUNT`   | Filter by `Gene_Count`.                                                                            |
 
 
 ## Final results spreadsheet (Results in a .csv file)
