@@ -59,7 +59,6 @@ python query_gene_data.py --db ../workdir/mergedir/final_data.db [-h] [--csv CSV
 | `--entry.name ENTRY.NAME`   | Filter by `Entry.Name`.                                                                            |
 | `--gene.names GENE.NAMES`   | Filter by `Gene.Names`.                                                                            |
 | `--panther PANTHER`         | Filter by `PANTHER`.                                                                               |
-| `--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.` | Filter by `Taxonomic.lineage..SPECIES.`                                                       |
 | `--tissue TISSUE`           | Filter by `Tissue`.                                                                                |
 | `--isoform_count ISOFORM_COUNT` | Filter by `Isoform_Count`.                                                                     |
 | `--gene_count GENE_COUNT`   | Filter by `Gene_Count`.                                                                            |
