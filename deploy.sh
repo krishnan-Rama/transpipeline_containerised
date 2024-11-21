@@ -182,3 +182,6 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # Step 12: Merge annotations with gene id, transcript id and blast results
  sbatch -d singleton --error="${log}/merge_%J.err" --output="${log}/merge_%J.out" "${moduledir}/12-datamerge.sh"
 
+# Step 13: Convert the final results spreadsheet into a query-able database
+ sbatch -d singleton --error="${log}/database_%J.err" --output="${log}/database_%J.out" "${moduledir}/13-csv2db.sh"
+
