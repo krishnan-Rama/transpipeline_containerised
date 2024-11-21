@@ -38,10 +38,12 @@ python query_gene_data.py --db ../workdir/mergedir/final_data.db --help
 ```
 Available displayed arguments:
 
-usage: query_gene_data.py [-h] [--csv CSV] [--db DB] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
+usage: 
+```
+python query_gene_data.py --db ../workdir/mergedir/final_data.db [-h] [--csv CSV] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
                           [--gene.names GENE.NAMES] [--panther PANTHER] [--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.] [--tissue TISSUE] [--isoform_count ISOFORM_COUNT]
                           [--gene_count GENE_COUNT]
-
+```
 
 | **Argument**                | **Description**                                                                                     |
 |-----------------------------|-----------------------------------------------------------------------------------------------------|
