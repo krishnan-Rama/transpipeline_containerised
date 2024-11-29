@@ -52,7 +52,7 @@ python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [
 
 | **Argument**                | **Description**                                                                                     |
 |-----------------------------|-----------------------------------------------------------------------------------------------------|
-| `-h, --help`      | Show the help message and exit.                                                                    |
+| `-h, --help`                | Show the help message and exit.                                                                    |
 | `--csv CSV`                 | Path to the CSV file to create the database (if the database doesn't exist).                        |
 | `--db DB`                   | Path to the SQLite database file (default: `final_data.db`).                                        |
 | `--species SPECIES`         | Filter by species (e.g., `Hsap`, `Mmus`, `Dmel`, `Cele`, `Scer`, `sprot`, or `all`).               |
@@ -68,6 +68,7 @@ python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [
 | `--isoform_count ISOFORM_COUNT` | Filter by `Isoform_Count`.                                                                     |
 | `--gene_count GENE_COUNT`   | Filter by `Gene_Count`.                                                                            |
 
+| hjhjh | jjbbkj |
 
 ## Final results spreadsheet (Results in a .csv file)
 The gene id, transcript id, blast and annotations with expression data compiled into a spreadsheet is also available in the locations:
