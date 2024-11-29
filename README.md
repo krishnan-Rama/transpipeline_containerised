@@ -69,6 +69,7 @@ python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [
 | `--gene_count GENE_COUNT`   | Filter by `Gene_Count`.                                                                            |
 
 | hjhjh | jjbbkj |
+|------|---------|
 
 ## Final results spreadsheet (Results in a .csv file)
 The gene id, transcript id, blast and annotations with expression data compiled into a spreadsheet is also available in the locations:
