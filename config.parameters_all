@@ -46,13 +46,6 @@ export sample_number
 export assembly
 export singularitydir
 
-# Step Test: Script Test
-testdir="/mnt/scratch/c23048124/raw_100K"
-if [[ ! -d "${testdir}" ]]; then
-        mkdir -p "${testdir}"
-fi
-export testdir
-
 # Step 0: Data Transfer
 rawdir="${pipedir}/raw_data"
 if [[ ! -d "${rawdir}" ]]; then 
