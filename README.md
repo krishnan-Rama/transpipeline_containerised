@@ -52,21 +52,21 @@ python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [
 
 | **Argument**                | **Description**                                                                                     |
 |-----------------------------|-----------------------------------------------------------------------------------------------------|
-| `-h, --help`                | Show the help message and exit.                                                                    |
-| `--csv CSV`                 | Path to the CSV file to create the database (if the database doesn't exist).                        |
-| `--db DB`                   | Path to the SQLite database file (default: `final_data.db`).                                        |
-| `--species SPECIES`         | Filter by species (e.g., `Hsap`, `Mmus`, `Dmel`, `Cele`, `Scer`, `sprot`, or `all`).               |
-| `--geneid GENEID`           | Filter by `GeneID`.                                                                                |
-| `--transcriptid TRANSCRIPTID` | Filter by `TranscriptID`.                                                                         |
-| `--entry ENTRY`             | Filter by `Entry`.                                                                                 |
-| `--e_value E_VALUE`         | Filter by `E_value`.                                                                               |
-| `--interpro INTERPRO`       | Filter by `InterPro`.                                                                              |
-| `--entry.name ENTRY.NAME`   | Filter by `Entry.Name`.                                                                            |
-| `--gene.names GENE.NAMES`   | Filter by `Gene.Names`.                                                                            |
-| `--panther PANTHER`         | Filter by `PANTHER`.                                                                               |
-| `--tissue TISSUE`           | Filter by `Tissue`.                                                                                |
-| `--isoform_count ISOFORM_COUNT` | Filter by `Isoform_Count`.                                                                     |
-| `--gene_count GENE_COUNT`   | Filter by `Gene_Count`.                                                                            |
+| `-h`                | Show the `help` message and exit.                                                                    |
+| `--csv`                 | Path to the CSV file to create the database (if the database doesn't exist).                        |
+| `--db`                   | Path to the SQLite database file (default: `final_data.db`).                                        |
+| `--species`         | Filter by species (e.g., `Hsap`, `Mmus`, `Dmel`, `Cele`, `Scer`, `sprot`, or `all`).               |
+| `--geneid`           | Filter by `GeneID`.                                                                                |
+| `--transcriptid` | Filter by `TranscriptID`.                                                                         |
+| `--entry`             | Filter by `Entry`.                                                                                 |
+| `--e_value`         | Filter by `E_value`.                                                                               |
+| `--interpro`       | Filter by `InterPro`.                                                                              |
+| `--entry.name`   | Filter by `Entry.Name`.                                                                            |
+| `--gene.names`   | Filter by `Gene.Names`.                                                                            |
+| `--panther`         | Filter by `PANTHER`.                                                                               |
+| `--tissue`           | Filter by `Tissue`.                                                                                |
+| `--isoform_count` | Filter by `Isoform_Count`.                                                                     |
+| `--gene_count`   | Filter by `Gene_Count`.                                                                            |
 
 
 ## Final results spreadsheet (Results in a .csv file)
