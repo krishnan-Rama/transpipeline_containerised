@@ -22,24 +22,25 @@ cat $0
 # load singularity module
 module load singularity/3.8.7
 
-#IMAGE_NAME=downloaded from http://datacache.g2.bx.psu.edu/singularity/u/p/ guide UPIMAPI : https://github.com/iquasere/UPIMAPI
-SINGULARITY_IMAGE_NAME=upimapi_1.9.0.sif
+IMAGE_NAME=upimapi:1.9.0--hdfd78af_0
 
-if [ -f ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} ]; then
+if [ -f ${pipedir}/singularities/${IMAGE_NAME} ]; then
     echo "Singularity image exists"
-else
+ else
     echo "Singularity image does not exist"
-    cp /mnt/scratch/nodelete/singularity_images/upimapi_1.9.0.sif ${pipedir}/singularities/upimapi_1.9.0.sif
+    wget -O ${pipedir}/singularities/${IMAGE_NAME} https://depot.galaxyproject.org/singularity/$IMAGE_NAME
 fi
 
-SINGIMAGEDIR=${pipedir}/singularities
-SINGIMAGENAME=${SINGULARITY_IMAGE_NAME}
+echo ${singularities}
 
-# Set working directory 
-WORKINGFOLDER=${pipedir}
+SINGIMAGEDIR=${pipedir}/singularities
+SINGIMAGENAME=${IMAGE_NAME}
+
+# Set working directory
+WORKINGDIR=${pipedir}
 
 # set folders to bind into container
-export BINDS="${BINDS},${WORKINGFOLDER}:${WORKINGFOLDER}"
+export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
 ############# SOURCE COMMANDS ##################################
 cat >${log}/upimapi_source_commands_${SLURM_JOB_ID}.sh <<EOF
@@ -60,4 +61,4 @@ cp -r "${upimapi}" "${outdir}/annotations"
 EOF
 ################ END OF SOURCE COMMANDS ######################
 
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGFOLDER} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/upimapi_source_commands_${SLURM_JOB_ID}.sh
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/upimapi_source_commands_${SLURM_JOB_ID}.sh
