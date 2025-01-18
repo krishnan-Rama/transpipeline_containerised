@@ -64,6 +64,8 @@ export TAXON_IDENTIFIER="$taxon_identifier"
 taxa="${TAXON_IDENTIFIER}"
 export taxa
 
+#---------------------------RUN TASKS---------------------------------------------
+
 # Step 1: Run Blobtools
 sbatch -d singleton --error="${log}/blobtools%J.err" --output="${log}/blobtools_%J.out" "${moduledir}/blobtools.sh"
 
