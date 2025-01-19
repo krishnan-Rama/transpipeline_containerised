@@ -35,6 +35,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
 
 ## Using blobtools to analyse and visualize transcriptome assemblies
+- Run `./deploy_blobtools.sh`
 
 ## Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
