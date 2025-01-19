@@ -117,6 +117,8 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # PROCESS - evigene
  sbatch -d singleton --error="${log}/evigene_%J.err" --output="${log}/evigene_%J.out" "${moduledir}/4-evigene.sh"
 
+ sbatch -d singleton --error="${log}/trinitystats_%J.err" --output="${log}/trinitystats_%J.out" "${moduledir}/4b-trinitystats.sh"
+
 # Step 5: BUSCO analysis
 # -- Run BUSCO to assess completeness of the assembly.
 # CORE PARAMETERS: modules, assemblydir, assembly [assembly.fasta | assembly_okay.fasta] , buscodir
