@@ -36,6 +36,7 @@ To generate **PCR/heatmap plots** for differential gene expression data, modify 
 
 ## Using blobtools to analyse and visualize transcriptome assemblies
 - Run `./deploy_blobtools.sh`
+- The prompt will ask you to type HPC partition name, Project identifier, and Taxonomic Id of the orgnaism 
 
 ## Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
