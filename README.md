@@ -32,7 +32,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 - All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
 
 ## Differential gene expression analysis and visualisation
-To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads.
+- To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads **`(workdir/trimmed/)`**.
 
 ## Using blobtools to analyse and visualize transcriptome assemblies
 - Run `./deploy_blobtools.sh`
