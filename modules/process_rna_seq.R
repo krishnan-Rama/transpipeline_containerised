@@ -1,11 +1,10 @@
-# Create a temporary directory for package installation
+# temporary directory for package installation
 temp_lib <- tempfile("R_library")
 dir.create(temp_lib)
 
-# Set the temporary directory as the default library path
+# Set the temp directory as the default library path
 .libPaths(temp_lib)
 
-# Install the required packages if not already installed
 if (!require("dplyr")) {
     install.packages("dplyr", repos = "http://cran.us.r-project.org", lib = temp_lib)
 }
@@ -13,11 +12,9 @@ if (!require("tidyr")) {
     install.packages("tidyr", repos = "http://cran.us.r-project.org", lib = temp_lib)
 }
 
-# Load the packages
 library(dplyr)
 library(tidyr)
 
-# Command line arguments
 args <- commandArgs(trailingOnly = TRUE)
 workdir <- args[1]
 assembly <- args[2]
