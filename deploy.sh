@@ -187,3 +187,5 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # Step 13: Convert the final results spreadsheet into a query-able database
  sbatch -d singleton --error="${log}/database_%J.err" --output="${log}/database_%J.out" "${moduledir}/13-csv2db.sh"
 
+# Step 14: CLEAN-UP INTERMEDIATORY FILES
+# sbatch -d singleton --error="${log}/database_%J.err" --output="${log}/database_%J.out" "${moduledir}/cleanup.sh"
