@@ -70,6 +70,21 @@ if [[ ! -d "${trimdir}" ]]; then
 fi
 export trimdir
 
+#-------------testing-------
+
+# count how many R1 files we have…
+sample_number=$(ls -1 "${trimdir}"/*_1.fastq.gz 2>/dev/null | wc -l)
+if (( sample_number == 0 )); then
+  echo "ERROR: no *_1.fastq.gz in ${trimdir}" >&2
+  exit 1
+fi
+
+# compute max index for SLURM_ARRAY_TASK_ID (zero-based)
+max_idx=$(( sample_number - 1 ))
+export sample_number max_idx
+
+#---------------------------
+
 # STEP 1B:
 # define in step 1
 
