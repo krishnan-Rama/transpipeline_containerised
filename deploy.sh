@@ -39,7 +39,6 @@ export SPECIES_IDENTIFIER="$species_identifier"
 assembly="${SPECIES_IDENTIFIER}"
 export assembly
 
-
 # Step 0: Data configuration
 # -- Copy raw data files from sourcedir to rawdir.
 # CORE PARAMETERS: sourcedir, rawdir
@@ -135,7 +134,7 @@ sbatch -d singleton --error="${log}/assembly_%J.err" --output="${log}/assembly_%
 # WORK: rsemdir
 # OUTPUT: 
 # PROCESS - trinity mapping
- sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" --array="0-5" "${moduledir}/6-trinity-mapping.sh"
+ sbatch -d singleton --error="${log}/rsem_%J.err" --output="${log}/rsem_%J.out" --array=0-${max_idx} "${moduledir}/6-trinity-mapping.sh"
 
 # Step 7: Summary stats and diff expression
 # comments
