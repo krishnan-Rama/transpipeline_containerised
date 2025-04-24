@@ -72,14 +72,15 @@ export trimdir
 
 #-------------testing-------
 
-# count how many R1 files we have…
-sample_number=$(ls -1 "${trimdir}"/*_1.fastq.gz 2>/dev/null | wc -l)
+# Count all files in rawdir
+sample_number=$(find "${rawdir}" -maxdepth 1 -type f | wc -l)
+
 if (( sample_number == 0 )); then
-  echo "ERROR: no *_1.fastq.gz in ${trimdir}" >&2
+  echo "ERROR: No input files found in ${rawdir}" >&2
   exit 1
 fi
 
-# compute max index for SLURM_ARRAY_TASK_ID (zero-based)
+# Compute max index for SLURM_ARRAY_TASK_ID (zero-based)
 max_idx=$(( sample_number - 1 ))
 export sample_number max_idx
 
