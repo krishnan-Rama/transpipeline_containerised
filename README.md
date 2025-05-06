@@ -1,4 +1,4 @@
-# transpipeline
+# 🧬 transpipeline 💻
 A SLURM pipeline designed for comprehensive transcriptome analysis, including quality assessment, pre-processing, _de novo_ assembly, and functional annotation. This pipeline is optimised explicitly for deployment on high-performance computing (HPC) clusters and executed _via_ Slurm Workload Manager.
 
 The **NextFlow version** of this pipeline is available at https://github.com/krishnan-Rama/transFlow, which offers improved system compatibility and efficiency.
@@ -41,13 +41,13 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 
 
-# 🧬 MIExplorer
+## 🧬 MIExplorer
 
 MIExplorer is a lightweight Python-based tool for exploring and visualizing drug-target interactions based on transcriptomic annotation data. It supports filtering by drug, tissue, or UniProt entry, and generates ranked sensitivity metrics and interactive network plots.
 ---
 
 
-## Key Features
+### Key Features
 
 - Filter by drug, tissue, or UniProt entry ID
 - Rank tissue-specific gene expressions (sensitivity)
@@ -56,7 +56,7 @@ MIExplorer is a lightweight Python-based tool for exploring and visualizing drug
 
 ---
 
-## Execution
+### Execution
 
 ```bash
 cd ./modules/MIExplorer
@@ -71,7 +71,7 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 
 ---
 
-## Inputs
+### Inputs
 
 * `Drug_targets_tool.csv`: Drug-target mapping file
 * `*_combined_final.csv`: Final annotation + expression file (from `outdir/merged_data/`)
@@ -86,15 +86,13 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 
 ---
 
-## Outputs
+### Outputs
 
 * Ranked and filtered CSV files
 * Gene count distribution plots (`.png`)
 * Interactive network (`Drug_Target_Network.html`)
 
 ---
-
-
 
 
 
