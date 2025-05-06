@@ -2,8 +2,8 @@
 A SLURM pipeline designed for comprehensive transcriptome analysis, including quality assessment, pre-processing, _de novo_ assembly, and functional annotation. This pipeline is optimised explicitly for deployment on high-performance computing (HPC) clusters and executed _via_ Slurm Workload Manager.
 
 The **NextFlow version** of this pipeline is available at https://github.com/krishnan-Rama/transFlow, which offers improved system compatibility and efficiency.
----
 
+---
 ## Key Features
 
 - **Transcriptome Quality Assessment**: Ensures high-quality data processing with integrated quality checks.
@@ -31,6 +31,7 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 - You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
 - You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
 - All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
+---
 
 ## Differential gene expression analysis and visualisation
 - To generate **PCR/heatmap plots** for differential gene expression data, modify the `metadata.txt` (example provided) file in the current directory as per the processed trimmed reads names `(workdir/trim_files/)`.
@@ -39,7 +40,6 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 - Run `./deploy_blobtools.sh`
 - The prompt will ask you to type HPC partition name, Project identifier, and Taxonomic Id of the organism.
 - Open the log file in `workdir/log/blobviewer.out` and follow the instructions to view assembly analysis and quality on your browser. 
-
 
 
 ## 🧬 MIExplorer
@@ -96,7 +96,7 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 ---
 
 ---
-## Database query `query_gene_data.py` (All results compiled)
+## 🖧 Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
 
 The program **`query_gene_data.py`** in `modules` directory can be used to query data. Simply execute below code to display querying arguments available:
