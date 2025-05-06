@@ -15,17 +15,18 @@ echo "\$SLURM_NTASKS=${SLURM_NTASKS}"
 echo "\$SLURM_NTASKS_PER_NODE=${SLURM_NTASKS_PER_NODE}"
 echo "\$SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}"
 echo "\$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}"
-
-module load python/3.10.5
-
-pip install tabulate
-
+#module load python/3.10.5
+ 
+python -m venv ${moduledir}/bio
+source ${moduledir}/bio/bin/activate
+ 
+pip install tabulate pandas
+ 
 workdir=${pipedir}
 
-database_outdir=${outdir}/database
-
-mkdir -p ${merged_outdir}
+database_outdir=${outdir}/database 
+mkdir -p ${database_outdir}
 
 merged_outdir=${workdir}/workdir/mergedir
-
-python ${moduledir}/query_gene_data.py --csv ${merged_outdir}/${assembly}_combined_final.csv --db ${merged_outdir}/final_data.db 
+ 
+python3 ${moduledir}/query_gene_data.py --csv ${merged_outdir}/${assembly}_combined_final.csv --db ${database_outdir}/final_data.db
