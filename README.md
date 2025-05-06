@@ -27,10 +27,10 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 
 4. The prompt will ask you to (1) enter your preferred HPC partition name to submit the job and (2) the species/project identifier (e.g. Hsap or Hsap_200524 for _Homo sapiens_), simply type the name and return (it doesn't really matter).
 
- **Note:** 
-- You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
-- You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
-- All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
+> **Note:** 
+>- You can run the pipeline multiple times simultaneously with different raw reads, simply repeat the installation process in a different directory and `./deploy` with a different species/project identifier name.
+>- You can manually reconfigure Slurm parameters as per your HPC system (e.g memory, CPUs) by going through indivudal scripts in `modules` directory.  
+>- All the relevent outputs will be stored in `outdir` folder, and outputs for every individual steps in the pipeline can be found in `workdir`.
 ---
 
 ## Differential gene expression analysis and visualisation
@@ -45,8 +45,6 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 ## 🧬 MIExplorer
 
 MIExplorer is a lightweight Python-based tool for exploring and visualizing drug-target interactions based on transcriptomic annotation data. It supports filtering by drug, tissue, or UniProt entry, and generates ranked sensitivity metrics and interactive network plots.
-
----
 
 ### Key Features
 
