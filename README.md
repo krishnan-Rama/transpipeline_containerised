@@ -39,6 +39,67 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 - The prompt will ask you to type HPC partition name, Project identifier, and Taxonomic Id of the organism.
 - Open the log file in `workdir/log/blobviewer.out` and follow the instructions to view assembly analysis and quality on your browser. 
 
+
+
+# 🧬 MIExplorer
+
+MIExplorer is a lightweight Python-based tool for exploring and visualizing drug-target interactions based on transcriptomic annotation data. It supports filtering by drug, tissue, or UniProt entry, and generates ranked sensitivity metrics and interactive network plots.
+---
+
+
+## Key Features
+
+- Filter by drug, tissue, or UniProt entry ID
+- Rank tissue-specific gene expressions (sensitivity)
+- Visualize drug-target networks interactively
+- Works directly with merged annotation CSVs
+
+---
+
+## Execution
+
+```bash
+cd ./modules/MIExplorer
+python g2mie.py --help
+````
+
+### Example
+
+```bash
+python g2mie.py -entry Q9Y6M5 -rank -network
+```
+
+---
+
+## Inputs
+
+* `Drug_targets_tool.csv`: Drug-target mapping file
+* `*_combined_final.csv`: Final annotation + expression file (from `outdir/merged_data/`)
+
+> 📦 Copy the final annotation file from:
+>
+> ```bash
+> ./outdir/merged_data/*.csv
+> ```
+>
+> into `MIExplorer` directory before running.
+
+---
+
+## Outputs
+
+* Ranked and filtered CSV files
+* Gene count distribution plots (`.png`)
+* Interactive network (`Drug_Target_Network.html`)
+
+---
+
+
+
+
+
+
+
 ## Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
 
