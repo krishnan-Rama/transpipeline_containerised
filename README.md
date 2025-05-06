@@ -94,10 +94,7 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 
 ---
 
-
-
-
-
+---
 ## Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
 
@@ -136,7 +133,7 @@ python ./modules/query_gene_data.py --db ./workdir/database/final_data.db [-h] [
 ## Final results spreadsheet (Results in a .csv file)
 The gene id, transcript id, blast and annotations with expression data compiled into a spreadsheet is also available in the locations:
 `transpipeline_containerised/workdir/mergedir/*_combined_final.csv` or `transpipeline_containerised/outdir/merged_data/*_combined_final.csv`
-
+---
   
 ### Workflow Diagram
 ![workflow](https://github.com/krishnan-Rama/transpipeline_containerised/assets/104147619/892ae381-69b3-45e8-a485-ccd50cf1794a)
