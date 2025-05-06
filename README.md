@@ -45,8 +45,8 @@ git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 ## 🧬 MIExplorer
 
 MIExplorer is a lightweight Python-based tool for exploring and visualizing drug-target interactions based on transcriptomic annotation data. It supports filtering by drug, tissue, or UniProt entry, and generates ranked sensitivity metrics and interactive network plots.
----
 
+---
 
 ### Key Features
 
