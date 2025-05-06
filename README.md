@@ -44,13 +44,13 @@ The transpipeline finishes with- gene id, transcript id, blast and annotations w
 
 The program **`query_gene_data.py`** in `modules` directory can be used to query data. Simply execute below code to display querying arguments available:
 ```
-python modules/query_gene_data.py --db ../workdir/database_outdir/final_data.db --help
+python modules/query_gene_data.py --db ../workdir/database/final_data.db --help
 ```
 Available displayed arguments:
 
 usage: 
 ```
-python ./modules/query_gene_data.py --db ./workdir/mergedir/final_data.db [-h] [--csv CSV] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
+python ./modules/query_gene_data.py --db ./workdir/database/final_data.db [-h] [--csv CSV] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
                           [--gene.names GENE.NAMES] [--panther PANTHER] [--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.] [--tissue TISSUE] [--isoform_count ISOFORM_COUNT]
                           [--gene_count GENE_COUNT]
 ```
