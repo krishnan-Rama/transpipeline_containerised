@@ -92,8 +92,6 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 * Interactive network (`Drug_Target_Network.html`)
 
 ---
-
----
 ## 🖧 Database query `query_gene_data.py` (All results compiled)
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
 
@@ -104,7 +102,7 @@ python modules/query_gene_data.py --db ../workdir/database/final_data.db --help
 Available displayed arguments:
 
 usage: 
-```
+```bash
 python ./modules/query_gene_data.py --db ./workdir/database/final_data.db [-h] [--csv CSV] [--species SPECIES] [--geneid GENEID] [--transcriptid TRANSCRIPTID] [--entry ENTRY] [--e_value E_VALUE] [--interpro INTERPRO] [--entry.name ENTRY.NAME]
                           [--gene.names GENE.NAMES] [--panther PANTHER] [--taxonomic.lineage..species. TAXONOMIC.LINEAGE..SPECIES.] [--tissue TISSUE] [--isoform_count ISOFORM_COUNT]
                           [--gene_count GENE_COUNT]
