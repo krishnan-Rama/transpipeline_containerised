@@ -68,8 +68,6 @@ python g2mie.py --help
 python g2mie.py -entry Q9Y6M5 -rank -network
 ```
 
----
-
 ### Inputs
 
 * `Drug_targets_tool.csv`: Drug-target mapping file
@@ -82,8 +80,6 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 > ```
 >
 > into `MIExplorer` directory before running.
-
----
 
 ### Outputs
 
