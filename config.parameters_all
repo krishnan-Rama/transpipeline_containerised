@@ -81,7 +81,7 @@ if (( sample_number == 0 )); then
 fi
 
 # Compute max index for SLURM_ARRAY_TASK_ID (zero-based)
-max_idx=$(( sample_number - 1 ))
+max_idx=$(( sample_number ))
 export sample_number max_idx
 
 #---------------------------
