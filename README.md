@@ -17,7 +17,7 @@ The **NextFlow version** of this pipeline is available at https://github.com/kri
 
 1. Install the transpipeline resources into your HPC cluster directory in which you will be performing the assembly:  
 
-```
+```bash
 git clone https://github.com/krishnan-Rama/transpipeline_containerised.git
 ```
 
@@ -98,7 +98,7 @@ python g2mie.py -entry Q9Y6M5 -rank -network
 The transpipeline finishes with- gene id, transcript id, blast and annotations with expression data compiled into a database `final_data.db` for a more user-friendly and efficient querying the RNA-seq data analysis and avoiding large spreadsheets. 
 
 The program **`query_gene_data.py`** in `modules` directory can be used to query data. Simply execute below code to display querying arguments available:
-```
+```bash
 python modules/query_gene_data.py --db ../workdir/database/final_data.db --help
 ```
 Available displayed arguments:
