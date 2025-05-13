@@ -1,4 +1,4 @@
-# 🧬 transpipeline 👩🏻‍💻
+# 🧬 transFlow 👩🏻‍💻
 A SLURM pipeline designed for comprehensive transcriptome analysis, including quality assessment, pre-processing, _de novo_ assembly, and functional annotation. This pipeline is optimised explicitly for deployment on high-performance computing (HPC) clusters and executed _via_ Slurm Workload Manager.
 
 The **NextFlow version** of this pipeline is available at https://github.com/krishnan-Rama/transFlow, which offers improved system compatibility and efficiency (although limited features).
