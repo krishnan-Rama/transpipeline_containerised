@@ -14,77 +14,72 @@ echo "Job ID: ${SLURM_JOB_ID}"
 echo "CPUs: ${SLURM_CPUS_PER_TASK}"
 echo "Memory: ${SLURM_MEM_PER_NODE} MB"
 
+# load singularity module
 module load singularity/3.8.7
 
 IMAGE_NAME=trinityrnaseq/trinityrnaseq:latest
 SINGULARITY_IMAGE_NAME=trinityrnaseq:latest
+
+if [ -f ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} ]; then
+    echo "Singularity image exists"
+else
+    echo "Singularity image does not exist"
+    singularity pull ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} docker://$IMAGE_NAME
+fi
+
+# set singularity image
 SINGIMAGEDIR=${pipedir}/singularities
 SINGIMAGENAME=${SINGULARITY_IMAGE_NAME}
+
+# Trinity requires max memory in GB not MB, script to convert mem to GB
+TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
+
+# Set working directory
 WORKINGDIR=${pipedir}
 
-if [ ! -f "${SINGIMAGEDIR}/${SINGIMAGENAME}" ]; then
-    echo "Pulling Trinity image..."
-    singularity pull "${SINGIMAGEDIR}/${SINGIMAGENAME}" docker://$IMAGE_NAME
-else
-    echo "✅ Singularity image already exists."
-fi
+# set folders to bind into container
+export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
 
-export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR},${rcordir}:${rcordir}"
-TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
-CMD_SCRIPT="${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh"
+############# SOURCE COMMANDS ##################################
+cat >${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh <<EOF
 
-cat > "$CMD_SCRIPT" <<EOF
-#!/bin/bash
-set -euo pipefail
+cat ${rcordir}/*_1.cor.fq.gz > ${rcordir}/all_1.fastq.gz
+cat ${rcordir}/*_2.cor.fq.gz > ${rcordir}/all_2.fastq.gz
 
-echo "🧬 Trinity Assembly Mode: \${ASSEMBLY_MODE:-de_novo}"
-echo "RAM: ${TOTAL_RAM}G | CPUs: ${SLURM_CPUS_PER_TASK}"
+Trinity --seqType fq \
+        --left "${rcordir}/all_1.fastq.gz" \
+        --right "${rcordir}/all_2.fastq.gz" \
+        --max_memory ${TOTAL_RAM}G \
+        --CPU ${SLURM_CPUS_PER_TASK} \
+        --output "${assemblydir}/" \
+        --full_cleanup
 
-if [[ "\${ASSEMBLY_MODE:-de_novo}" == "genome_guided" && -f "${rcordir}/aligned.sorted.bam" ]]; then
-    echo "📌 Running genome-guided Trinity"
+# remove all temp files created by trinity
+# rm -rf ${assemblydir}/*
+# rm ${krakendir}/all_1.fastq.gz
+# rm ${krakendir}/all_2.fastq.gz
 
-    Trinity --genome_guided_bam "${rcordir}/aligned.sorted.bam" \\
-            --genome_guided_max_intron 10000 \\
-            --CPU ${SLURM_CPUS_PER_TASK} \\
-            --max_memory ${TOTAL_RAM}G \\
-            --output "${assemblydir}/" \\
-            --full_cleanup
+#move assembly and gene trans map into assembly folder
+mv "${assemblydir}.Trinity.fasta" "${assemblydir}/${assembly}.fasta"
 
-    cp "${assemblydir}.Trinity-GG.fasta" "${assemblydir}/Trinity.fasta"
-    cp "${assemblydir}.Trinity-GG.fasta.gene_trans_map" "${assemblydir}/Trinity.fasta.gene_trans_map"
+mv "${assemblydir}.Trinity.fasta.gene_trans_map" "${assemblydir}/${assembly}.gene_trans_map"
 
-else
-    echo "📌 Running de novo Trinity"
+#rename contigs by assembly using species identifier
+sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
 
-    cat ${rcordir}/*_1.cor.fq.gz > ${rcordir}/all_1.fastq.gz
-    cat ${rcordir}/*_2.cor.fq.gz > ${rcordir}/all_2.fastq.gz
-
-    Trinity --seqType fq \\
-            --left "${rcordir}/all_1.fastq.gz" \\
-            --right "${rcordir}/all_2.fastq.gz" \\
-            --CPU ${SLURM_CPUS_PER_TASK} \\
-            --max_memory ${TOTAL_RAM}G \\
-            --output "${assemblydir}/" \\
-            --full_cleanup
-fi
-
-# Rename output
-mv "${assemblydir}/Trinity.fasta" "${assemblydir}/${assembly}.fasta"
-mv "${assemblydir}/Trinity.fasta.gene_trans_map" "${assemblydir}/${assembly}.gene_trans_map"
-
-# Tag contigs with species name
-sed -i "s/TRINITY_DN/\${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
-sed -i "s/TRINITY_GG/\${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
-
-# Generate stats
+#create assembly stats
+#TrinityStats.pl on the Trinity.fasta output file
 /usr/local/bin/util/TrinityStats.pl "${assemblydir}/${assembly}.fasta" > "${assemblydir}/${assembly}_stats.txt"
 
-# Copy to output
 mkdir -p "${outdir}/raw_assembly"
-cp "${assemblydir}/${assembly}.fasta" "${outdir}/raw_assembly/"
-cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/raw_assembly/"
-cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/raw_assembly/"
-EOF
+cp "${assemblydir}/${assembly}.fasta" "${outdir}/raw_assembly/${assembly}.fasta"
+cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/raw_assembly/${assembly}_stats.txt"
+cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/raw_assembly/${assembly}.gene_trans_map"
 
-# Execute Trinity script inside container
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash "$CMD_SCRIPT"
+echo TOTAL_RAM=${TOTAL_RAM}
+echo CPU=${SLURM_CPUS_PER_TASK}
+
+EOF
+################ END OF SOURCE COMMANDS ######################
+
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh
