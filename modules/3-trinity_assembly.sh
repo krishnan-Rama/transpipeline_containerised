@@ -1,91 +1,90 @@
 #!/bin/bash
 
 #SBATCH --job-name=<pipeline>
-#SBATCH --partition=<HPC_partition>       # the requested queue
-#SBATCH --nodes=1              # number of nodes to use
-#SBATCH --tasks-per-node=1     #
-#SBATCH --cpus-per-task=16      #   
-#SBATCH --mem=30000     # in megabytes, unless unit explicitly stated
+#SBATCH --partition=<HPC_partition>     
+#SBATCH --nodes=1              
+#SBATCH --tasks-per-node=1     
+#SBATCH --cpus-per-task=16      
+#SBATCH --mem=30000     
 
-echo "Some Usable Environment Variables:"
-echo "================================="
+echo "Environment Info:"
+echo "================="
 echo "hostname=$(hostname)"
-echo \$SLURM_JOB_ID=${SLURM_JOB_ID}
-echo \$SLURM_NTASKS=${SLURM_NTASKS}
-echo \$SLURM_NTASKS_PER_NODE=${SLURM_NTASKS_PER_NODE}
-echo \$SLURM_CPUS_PER_TASK=${SLURM_CPUS_PER_TASK}
-echo \$SLURM_JOB_CPUS_PER_NODE=${SLURM_JOB_CPUS_PER_NODE}
-echo \$SLURM_MEM_PER_CPU=${SLURM_MEM_PER_CPU}
+echo "Job ID: ${SLURM_JOB_ID}"
+echo "CPUs: ${SLURM_CPUS_PER_TASK}"
+echo "Memory: ${SLURM_MEM_PER_NODE} MB"
 
-# Write jobscript to output file (good for reproducability)
-cat $0
-
-# load singularity module
 module load singularity/3.8.7
 
 IMAGE_NAME=trinityrnaseq/trinityrnaseq:latest
 SINGULARITY_IMAGE_NAME=trinityrnaseq:latest
-
-if [ -f ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} ]; then
-    echo "Singularity image exists"
-else
-    echo "Singularity image does not exist"
-    singularity pull ${pipedir}/singularities/${SINGULARITY_IMAGE_NAME} docker://$IMAGE_NAME
-fi
-
-# set singularity image
 SINGIMAGEDIR=${pipedir}/singularities
 SINGIMAGENAME=${SINGULARITY_IMAGE_NAME}
-
-# Trinity requires max memory in GB not MB, script to convert mem to GB
-TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
-
-# Set working directory 
 WORKINGDIR=${pipedir}
 
-# set folders to bind into container
-export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR}"
+if [ ! -f "${SINGIMAGEDIR}/${SINGIMAGENAME}" ]; then
+    echo "Pulling Trinity image..."
+    singularity pull "${SINGIMAGEDIR}/${SINGIMAGENAME}" docker://$IMAGE_NAME
+else
+    echo "✅ Singularity image already exists."
+fi
 
-############# SOURCE COMMANDS ##################################
-cat >${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh <<EOF
+export BINDS="${BINDS},${WORKINGDIR}:${WORKINGDIR},${rcordir}:${rcordir}"
+TOTAL_RAM=$(expr ${SLURM_MEM_PER_NODE} / 1024)
+CMD_SCRIPT="${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh"
 
-cat ${rcordir}/*_1.cor.fq.gz > ${rcordir}/all_1.fastq.gz
-cat ${rcordir}/*_2.cor.fq.gz > ${rcordir}/all_2.fastq.gz
+cat > "$CMD_SCRIPT" <<EOF
+#!/bin/bash
+set -euo pipefail
 
-Trinity --seqType fq \
-        --left "${rcordir}/all_1.fastq.gz" \
-        --right "${rcordir}/all_2.fastq.gz" \
-        --max_memory ${TOTAL_RAM}G \
-        --CPU ${SLURM_CPUS_PER_TASK} \
-        --output "${assemblydir}/" \
-        --full_cleanup
+echo "🧬 Trinity Assembly Mode: \${ASSEMBLY_MODE:-de_novo}"
+echo "RAM: ${TOTAL_RAM}G | CPUs: ${SLURM_CPUS_PER_TASK}"
 
-# remove all temp files created by trinity
-# rm -rf ${assemblydir}/*
-# rm ${krakendir}/all_1.fastq.gz
-# rm ${krakendir}/all_2.fastq.gz
+if [[ "\${ASSEMBLY_MODE:-de_novo}" == "genome_guided" && -f "${rcordir}/aligned.sorted.bam" ]]; then
+    echo "📌 Running genome-guided Trinity"
 
-#move assembly and gene trans map into assembly folder
-mv "${assemblydir}.Trinity.fasta" "${assemblydir}/${assembly}.fasta"
+    Trinity --genome_guided_bam "${rcordir}/aligned.sorted.bam" \\
+            --genome_guided_max_intron 10000 \\
+            --CPU ${SLURM_CPUS_PER_TASK} \\
+            --max_memory ${TOTAL_RAM}G \\
+            --output "${assemblydir}/" \\
+            --full_cleanup
 
-mv "${assemblydir}.Trinity.fasta.gene_trans_map" "${assemblydir}/${assembly}.gene_trans_map"
+    cp "${assemblydir}.Trinity-GG.fasta" "${assemblydir}/Trinity.fasta"
+    cp "${assemblydir}.Trinity-GG.fasta.gene_trans_map" "${assemblydir}/Trinity.fasta.gene_trans_map"
 
-#rename contigs by assembly using species identifier
-sed -i "s/TRINITY_DN/${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
+else
+    echo "📌 Running de novo Trinity"
 
-#create assembly stats
-#TrinityStats.pl on the Trinity.fasta output file
+    cat ${rcordir}/*_1.cor.fq.gz > ${rcordir}/all_1.fastq.gz
+    cat ${rcordir}/*_2.cor.fq.gz > ${rcordir}/all_2.fastq.gz
+
+    Trinity --seqType fq \\
+            --left "${rcordir}/all_1.fastq.gz" \\
+            --right "${rcordir}/all_2.fastq.gz" \\
+            --CPU ${SLURM_CPUS_PER_TASK} \\
+            --max_memory ${TOTAL_RAM}G \\
+            --output "${assemblydir}/" \\
+            --full_cleanup
+fi
+
+# Rename output
+mv "${assemblydir}/Trinity.fasta" "${assemblydir}/${assembly}.fasta"
+mv "${assemblydir}/Trinity.fasta.gene_trans_map" "${assemblydir}/${assembly}.gene_trans_map"
+
+# Tag contigs with species name
+sed -i "s/TRINITY_DN/\${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
+sed -i "s/TRINITY_GG/\${SPECIES_IDENTIFIER}_/g" "${assemblydir}/${assembly}.fasta"
+
+# Generate stats
 /usr/local/bin/util/TrinityStats.pl "${assemblydir}/${assembly}.fasta" > "${assemblydir}/${assembly}_stats.txt"
 
+# Copy to output
 mkdir -p "${outdir}/raw_assembly"
-cp "${assemblydir}/${assembly}.fasta" "${outdir}/raw_assembly/${assembly}.fasta"
-cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/raw_assembly/${assembly}_stats.txt"
-cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/raw_assembly/${assembly}.gene_trans_map"
-
-echo TOTAL_RAM=${TOTAL_RAM}
-echo CPU=${SLURM_CPUS_PER_TASK}
-
+cp "${assemblydir}/${assembly}.fasta" "${outdir}/raw_assembly/"
+cp "${assemblydir}/${assembly}_stats.txt" "${outdir}/raw_assembly/"
+cp "${assemblydir}/${assembly}.gene_trans_map" "${outdir}/raw_assembly/"
 EOF
-################ END OF SOURCE COMMANDS ######################
 
-singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash ${log}/trinity_assembly_commands_${SLURM_JOB_ID}.sh
+# Execute Trinity script inside container
+singularity exec --contain --bind ${BINDS} --pwd ${WORKINGDIR} ${SINGIMAGEDIR}/${SINGIMAGENAME} bash "$CMD_SCRIPT"
