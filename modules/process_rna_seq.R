@@ -22,8 +22,8 @@ mergedir <- args[3]
 
 # Set file paths dynamically based on variables
 gene_trans_map_file <- paste0(workdir, "/outdir/nonredundant_assembly/", assembly, "_okay.gene_trans_map")
-isoform_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.isoform.counts.matrix")
-gene_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.gene.counts.matrix")
+isoform_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.isoform.TMM.EXPR.matrix")
+gene_matrix_file <- paste0(workdir, "/workdir/rsem/", assembly, "_RSEM.gene.TMM.EXPR.matrix")
 
 # Function to process blp and upimapi files
 process_files <- function(blp_file, upimapi_file, gene_trans_map_file, species_name, isoform_matrix_file, gene_matrix_file) {
